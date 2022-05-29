@@ -1,0 +1,18 @@
+# Miscellaneous
+*.log
+*.swp
+.DS_Store
+.atom/
+
+# VS Cdoe
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
+
+# Dart
+**/doc/api/

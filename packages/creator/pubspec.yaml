@@ -1,0 +1,14 @@
+name: creator
+description: A state management library that enables concise, fluid, readable and testable business logic code. 
+version: 0.1.0
+homepage: https://github.com/terryl1900/creator
+
+environment:
+  sdk: '>=2.18.0-149.0.dev <3.0.0'
+
+
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.16.0
+  mockito: ^5.2.0
+  build_runner: ^2.1.11 
