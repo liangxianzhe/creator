@@ -354,7 +354,7 @@ Creators comes with factory methods `arg1` `arg2` `arg3` which take in 1-3 argum
 ## Extension method
 
 Our favorite part of the framework is that you can use methods like `map`,
-`where` on creators (full list [here](packages/creator/lib/src/extension.dart)). They are similar to those methods in
+`where` on creators (full list [here](https://github.com/terryl1900/creator/blob/master/packages/creator/lib/src/extension.dart)). They are similar to those methods in
 Iterable or Stream.
 
 ```dart
@@ -552,17 +552,17 @@ is less than 500 lines of code.
 
 Read creator_core library in this order:
 
-* **[graph.dart](packages/creator_core/lib/src/graph.dart)**: a simple implementation of a bi-directed graph using adjacency
+* **[graph.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/graph.dart)**: a simple implementation of a bi-directed graph using adjacency
 list. It can automatically delete nodes which become zero out-degree. 
-* **[creator.dart](packages/creator_core/lib/src/creator.dart)**: the CreatorBase class and its two sub classes, Creator and Emitter. 
+* **[creator.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/creator.dart)**: the CreatorBase class and its two sub classes, Creator and Emitter. 
 Their main job is to recreate state when asked.
-* **[ref.dart](packages/creator_core/lib/src/ref.dart)**: manages the graph and provides `watch`, `read`, `set` methods to user. 
-* [extension.dart](packages/creator/lib/src/extension.dart): implement extension methods `map`, `where`, etc.
+* **[ref.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/ref.dart)**: manages the graph and provides `watch`, `read`, `set` methods to user. 
+* [extension.dart](https://github.com/terryl1900/creator/blob/master/packages/creator/lib/src/extension.dart): implement extension methods `map`, `where`, etc.
 
 Read creator library in this order:
 
-* [creator_graph.dart](packages/creator/lib/src/creator_graph.dart): A simple InheritedWidget which expose `Ref` through context.
-* [watcher.dart](packages/creator/lib/src/watcher.dart): A stateful widget which holds a `Creator<Widget>` internally.
+* [creator_graph.dart](https://github.com/terryl1900/creator/blob/master/packages/creator/lib/src/creator_graph.dart): A simple InheritedWidget which expose `Ref` through context.
+* [watcher.dart](https://github.com/terryl1900/creator/blob/master/packages/creator/lib/src/watcher.dart): A stateful widget which holds a `Creator<Widget>` internally.
 
 # FAQ
 
