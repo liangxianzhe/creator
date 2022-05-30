@@ -71,7 +71,7 @@ Widget build(BuildContext context) {
 
 Getting started:
 ```
-dart pub add flutter_creator
+dart pub add creator
 ```
 
 Table of content:
@@ -550,19 +550,19 @@ things we follow:
 Creator's implementation is surprisingly simple. In fact, the **core logic**
 is less than 500 lines of code.
 
-Read creator library in this order:
+Read creator_core library in this order:
 
-* **[graph.dart](packages/creator/lib/src/graph.dart)**: a simple implementation of a bi-directed graph using adjacency
+* **[graph.dart](packages/creator_core/lib/src/graph.dart)**: a simple implementation of a bi-directed graph using adjacency
 list. It can automatically delete nodes which become zero out-degree. 
-* **[creator.dart](packages/creator/lib/src/creator.dart)**: the CreatorBase class and its two sub classes, Creator and Emitter. 
+* **[creator.dart](packages/creator_core/lib/src/creator.dart)**: the CreatorBase class and its two sub classes, Creator and Emitter. 
 Their main job is to recreate state when asked.
-* **[ref.dart](packages/creator/lib/src/ref.dart)**: manages the graph and provides `watch`, `read`, `set` methods to user. 
+* **[ref.dart](packages/creator_core/lib/src/ref.dart)**: manages the graph and provides `watch`, `read`, `set` methods to user. 
 * [extension.dart](packages/creator/lib/src/extension.dart): implement extension methods `map`, `where`, etc.
 
-Read flutter_creator library in this order:
+Read creator library in this order:
 
-* [creator_graph.dart](packages/flutter_creator/lib/src/creator_graph.dart): A simple InheritedWidget which expose `Ref` through context.
-* [watcher.dart](packages/flutter_creator/lib/src/watcher.dart): A stateful widget which holds a `Creator<Widget>` internally.
+* [creator_graph.dart](packages/creator/lib/src/creator_graph.dart): A simple InheritedWidget which expose `Ref` through context.
+* [watcher.dart](packages/creator/lib/src/watcher.dart): A stateful widget which holds a `Creator<Widget>` internally.
 
 # FAQ
 
