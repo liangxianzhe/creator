@@ -1,4 +1,4 @@
-<p align="center"> <img height="80" src="resource/logo.png"> </p>
+<p align="center"> <img height="80" src="https://github.com/terryl1900/creator/blob/master/resource/logo.png?raw=true"> </p>
 
 Creator is a state management library that enables **concise, fluid, readable and testable** business logic code.
 
@@ -139,7 +139,7 @@ Both `Creator` and `Emitter`:
 Dependencies form a graph, and it is managed internally by the framework. This is
 the graph for the weather example above:
 
-![weather](resource/weather.png?raw=true)
+![weather](https://github.com/terryl1900/creator/blob/master/resource/weather.png?raw=true)
 
 # Usage
 

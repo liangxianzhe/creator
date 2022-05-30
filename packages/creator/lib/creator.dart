@@ -1,6 +1,5 @@
 library creator;
 
-export 'src/async_data.dart';
-export 'src/core.dart' hide RefForTest, RefForLifeCycleTest;
-export 'src/extension.dart';
-export 'src/observer.dart';
+export 'package:creator_core/creator_core.dart' hide DefaultCreatorObserver;
+export 'src/creator_graph.dart';
+export 'src/watcher.dart';
