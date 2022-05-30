@@ -354,7 +354,7 @@ Creators comes with factory methods `arg1` `arg2` `arg3` which take in 1-3 argum
 ## Extension method
 
 Our favorite part of the framework is that you can use methods like `map`,
-`where` on creators (full list [here](https://github.com/terryl1900/creator/blob/master/packages/creator/lib/src/extension.dart)). They are similar to those methods in
+`where` on creators (full list [here](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/extension.dart)). They are similar to those methods in
 Iterable or Stream.
 
 ```dart
