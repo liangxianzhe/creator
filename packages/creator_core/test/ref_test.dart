@@ -425,16 +425,17 @@ void main() {
   group('creator equality', () {
     test('creator changes defined as local variable', () {
       final ref = RefForTest();
-      final a = Creator.value(1);
+      final a = Creator.value(1, name: 'a');
       final c = Creator(((ref) {
-        final b = Creator(((ref) => ref.watch(a) * 2));
+        final b = Creator(((ref) => ref.watch(a) * 2), name: 'b');
         return ref.watch(b) * 2;
-      }));
+      }), name: 'c');
 
       expect(ref.watch(c), 4);
       final creators = {...ref.elements.keys};
       ref.recreate(c);
 
+      expect(creators.length, ref.elements.length);
       expect(ref.elements.keys, contains(a));
       expect(ref.elements.keys, contains(c));
       expect(creators, contains(a));
