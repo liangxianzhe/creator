@@ -3,6 +3,8 @@
 *.swp
 .DS_Store
 .atom/
+coverage/
+coverage.lcov
 
 # VS Cdoe
 .vscode/*
@@ -14,5 +16,12 @@
 .history/
 *.vsix
 
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
 # Dart
 **/doc/api/
+.dart_tool/
