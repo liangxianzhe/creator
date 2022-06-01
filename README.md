@@ -1,6 +1,11 @@
 <p align="center"> <img height="80" src="https://github.com/terryl1900/creator/blob/master/resource/logo.png?raw=true"> </p>
 
-Creator is a state management library that enables **concise, fluid, readable and testable** business logic code.
+<p align="center">
+<a href="https://pub.dev/packages/creator"><img src="https://img.shields.io/pub/v/creator.svg" alt="Pub"></a>
+<a href="https://github.com/terryl1900/creator/actions"><img src="https://github.com/terryl1900/creator/workflows/Build/badge.svg" alt="build"></a>
+</p>
+
+Creator is a state management library that enables **concise, fluid, readable, and testable** business logic code.
 
 Read and update state with compile time safety:
 
@@ -115,11 +120,11 @@ several issues related to its async providers and realized we want a different
 mechanism.
 
 So we built Creator. It is heavily inspired by `riverpod`, but with simpler
-data model, better async support and much simplified implementation.
+data model, better async support, and much-simplified implementation.
 
-The benefit using Creator:
+The benefit of using Creator:
 
-* Enables concise, fluid, readable and testable code.
+* Enables concise, fluid, readable, and testable code.
 * Expressive for both sync and async behavior.
 * Simple concept. Simple implementation. Lightweight.
 
@@ -204,7 +209,7 @@ services, which is async by nature.
 
 ```dart
 final stockCreator = Creator.value('TSLA');
-final priceCreator = Emitter((ref, emit) async {
+final priceCreator = Emitter<int>((ref, emit) async {
   final stock = ref.watch(stockCreator);
   final price = await fetchStockPrice(stock);
   emit(price);
@@ -416,13 +421,13 @@ final text = Creator((ref) {
 Here `double` is a local variable, it has different instances whenever `text` is
 recreated. The internal graph could change from `number -> double_A -> text` to
 `number -> double_B -> text` as the number changes. `text` still generates 
-correct data, but there is extra cost to swap the node in the graph. Because the
+correct data, but there is an extra cost to swap the node in the graph. Because the
 change is localized to only one node, the cost can be ignored as long as the
 create function is simple.
 
 If needed, an optional `List<Object?> args` can be set to ask the framework to
 find an existing creator with the same `args` in the graph. Now when number
-changes, the graph wont change:
+changes, the graph won't change:
 
 ```dart
 final text = Creator((ref) {
@@ -447,7 +452,7 @@ Internally, args powers these features:
 
 ## Service locator
 
-State management libraries are commonly used as service locator:
+State management libraries are commonly used as service locators:
 
 ```dart
 class UserRepo {
@@ -532,7 +537,7 @@ with Creator and Emitter.
 
 [DartPad](https://dartpad.dev/?id=77a60e33349a20c6623d163146378c5d)
 
-Simple app shows how the creator framework build internal graph dynamically.
+Simple app shows how the creator framework builds the internal graph dynamically.
 
 # Best practice
 
@@ -540,7 +545,7 @@ Creator is quite flexible and doesn't force a particular style. Best practices
 also depend on the project and personal preference. Here we just list a few
 things we follow:
 
-* Split code into repo files (backend service call), logic files (creator) and UI files (widget).
+* Split code into repo files (backend service call), logic files (creator), and UI files (widget).
 * Define creator in global variables.
 * Keep creator small for testability. Put derived state in derived creators (using `map`, `where`, etc).
 
@@ -570,12 +575,12 @@ Read creator library in this order:
 
 Well, we have been using it in production for our own app
 ([Chooly](https://chooly.app)). However, since it is new to the
-community, the API might change as we take feedbacks. So the suggestion for now:
+community, the API might change as we take feedback. So the suggestion for now:
 read the source code and make your own call. 
 
 ## Is it bad to define creator as global variable?
 
-It's not. Creator itself doesn't hold state. States are held in Ref (in
+It's not. Creator itself doesn't hold states. States are held in Ref (in
 CreatorGraph). Defining a creator is more like defining a function or a class.
 
 ## How to watch a property while still accessing the whole object?
@@ -601,7 +606,7 @@ They both point to the same internal graph, the only difference is that the
 first ref's `_owner` field is null, while the second ref's `_owner` field is the
 creator itself. This means:
 * It is the same to `read`, `set` or `update` any creators with either ref. The operation is
-pass to the internal graph.
+passed to the internal graph.
 * If `ref._owner` is null, `ref.watch(foo)` will simply add `foo` to the graph. 
 * If `ref._owner` is not null, `ref.watch(foo)` will also add an edge `foo -> ref._owner` to the graph.
 

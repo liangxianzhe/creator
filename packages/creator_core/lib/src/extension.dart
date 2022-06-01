@@ -18,13 +18,13 @@ extension CreatorExtension<T> on Creator<T> {
 
   Emitter<F> mapAsync<F>(Future<F> Function(T) map,
       {String? name, bool keepAlive = false, List<Object?>? args}) {
-    return Emitter((ref, emit) async => emit(await map(ref.watch(this))),
+    return Emitter<F>((ref, emit) async => emit(await map(ref.watch(this))),
         name: name ?? '${infoName}_map', keepAlive: keepAlive, args: args);
   }
 
   Emitter<T> where(bool Function(T) test,
       {String? name, bool keepAlive = false, List<Object?>? args}) {
-    return Emitter((ref, emit) {
+    return Emitter<T>((ref, emit) {
       final value = ref.watch(this);
       if (test(value)) {
         emit(value);
@@ -37,7 +37,7 @@ extension CreatorExtension<T> on Creator<T> {
 extension EmitterExtension<T> on Emitter<T> {
   Emitter<F> map<F>(F Function(T) map,
       {String? name, bool keepAlive = false, List<Object?>? args}) {
-    return Emitter(
+    return Emitter<F>(
         (ref, emit) => ref.watch(this).then((value) => emit(map(value))),
         name: name ?? '${infoName}_map',
         keepAlive: keepAlive,
@@ -46,7 +46,7 @@ extension EmitterExtension<T> on Emitter<T> {
 
   Emitter<F> where<F>(bool Function(T) test,
       {String? name, bool keepAlive = false, List<Object?>? args}) {
-    return Emitter((ref, emit) {
+    return Emitter(<F>(ref, emit) {
       return ref.watch(this).then((value) {
         if (test(value)) {
           emit(value as F);
