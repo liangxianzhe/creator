@@ -135,26 +135,26 @@ class CreatorElement<T> extends ElementBase<T> {
   @override
   void recreate({CreatorBase? reason, bool autoDispose = false}) {
     error = null;
-    // No need to recreate if initializing, since create is called in
-    // constructor already.
-    if (created) {
-      // Return if creation is not allowed, i.e. another job is in progress.
+    if (!created) {
+      ref._onStateChange(creator, prevState, state);
+    } else {
+      // No need to recreate if initializing, since create is called in
+      // constructor already.
       if (!ref._onCreateStart()) {
+        // Return if creation is not allowed, i.e. another job is in progress.
         return;
       }
-      final prevState = this.prevState; // Save in case of error
-      this.prevState = state;
       try {
-        state = (creator as Creator<T>).create(ref);
+        final newState = (creator as Creator<T>).create(ref);
+        if (newState != state) {
+          prevState = state;
+          state = newState;
+          ref._onStateChange(creator, prevState, state);
+        }
       } catch (error) {
         this.error = error;
-        this.prevState = prevState;
+        ref._onError(creator, error);
       }
-    }
-    if (error != null) {
-      ref._onError(creator, error);
-    } else if (prevState != state) {
-      ref._onStateChange(creator, prevState, state);
     }
     if (autoDispose) {
       ref.dispose(creator);
@@ -238,16 +238,16 @@ class EmitterElement<T> extends ElementBase<Future<T>> {
     error = null;
     try {
       await (creator as Emitter<T>).create(ref, (newValue) {
-        if (!created) {
-          // emit is called the first time, let's wake up awaiting watchers.
-          completer.complete(newValue);
-        } else {
-          prevState = state;
-          state = Future<T>.value(newValue);
-        }
-        prevValue = value;
-        value = newValue;
-        if (!created || prevValue != value) {
+        if (value != newValue) {
+          if (!created) {
+            // emit is called the first time, let's wake up awaiting watchers.
+            completer.complete(newValue);
+          } else {
+            prevState = state;
+            state = Future<T>.value(newValue);
+          }
+          prevValue = value;
+          value = newValue;
           ref._onStateChange(creator, prevValue, value);
         }
         // Emitter is considered created as long as emit is called once.

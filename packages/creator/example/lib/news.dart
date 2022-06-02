@@ -7,33 +7,32 @@ import 'package:creator/creator.dart';
 // repo.dart
 
 // Pretend calling a backend service to get news.
-Future<List<String>> fetchNews(int startIndex, int count) async {
+
+const count = 10; // Item count per page.
+
+Future<List<String>> fetchNews(int page) async {
   await Future.delayed(const Duration(seconds: 1));
   return List.generate(count, (index) {
-    final date = DateTime.now().subtract(Duration(days: startIndex + index));
+    final date = DateTime.now().subtract(Duration(days: page * count + index));
     return '${date.toIso8601String().substring(0, 10)} is a peaceful day';
   });
 }
 
 // logic.dart
 
-final news = Creator<List<String>>.value([]);
-final loading = Creator.value(true); // default to true to fetch first page
-final _nextIndex = Creator.value(0); // private state
+// Hide _page in file level private variable and expose fetchMore API.
+final _page = Creator.value(0);
+void fetchMore(Ref ref) => ref.update<int>(_page, (n) => n + 1);
 
-// fetcher does the work, but has no state itself.
-final fetcher = Emitter<void>((ref, emit) async {
-  // Keep news and _nextIndex alive in case we return early. This also ensure
-  // they are disposed when fetcher is disposed, in case UI doesn't watch news.
-  ref.watch(news);
-  ref.watch(_nextIndex);
-  if (!ref.watch(loading)) {
-    return; // Only fetch if loading is set by user.
-  }
+// Loading indicator.
+final loading = Creator.value(true);
 
-  final fetched = await fetchNews(ref.watch(_nextIndex), 10);
-  ref.update<int>(_nextIndex, (n) => n + 10);
-  ref.update<List<String>>(news, (current) => [...current, ...fetched]);
+// News fetches next page when _page changes.
+final news = Emitter<List<String>>((ref, emit) async {
+  ref.set(loading, true);
+  final next = await fetchNews(ref.watch(_page));
+  final current = ref.readSelf<List<String>>() ?? [];
+  emit([...current, ...next]);
   ref.set(loading, false);
 });
 
@@ -63,20 +62,26 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Watcher(
-      ((context, ref, child) {
+      ((context, ref, _) {
+        final data = ref.watch(news.asyncData).data ?? [];
         return ListView.builder(
-            itemCount: ref.watch(news).length + 1,
-            itemBuilder: ((context, index) {
-              if (index == ref.watch(news).length) {
+          itemCount: data.length + 1,
+          itemBuilder: ((context, index) {
+            if (index == data.length) {
+              // Using another Watcher here is an optional optimization, to
+              // avoid rebuild the whole list when loading indicator changes.
+              return Watcher(((context, ref, _) {
                 return TextButton(
-                    onPressed: () => ref.set(loading, true),
-                    child: Text(ref.watch(loading) ? 'Loading' : 'Load more'));
-              } else {
-                return Center(child: Text(ref.watch(news)[index]));
-              }
-            }));
+                  onPressed: ref.watch(loading) ? null : () => fetchMore(ref),
+                  child: Text(ref.watch(loading) ? 'Loading' : 'Load more'),
+                );
+              }));
+            } else {
+              return Center(child: Text(data[index]));
+            }
+          }),
+        );
       }),
-      listener: (ref) => ref.watch(fetcher), // Let fetcher do the work.
     );
   }
 }

@@ -61,6 +61,36 @@ void main() {
     });
   });
 
+  group('read self', () {
+    test('read self for creator', () {
+      final ref = RefForTest();
+      final creator = Creator(((ref) {
+        return (ref.readSelf() ?? 0) + 1;
+      }));
+
+      expect(ref.watch(creator), 1);
+      ref.recreate(creator);
+      expect(ref.watch(creator), 2);
+      ref.recreate(creator);
+      expect(ref.watch(creator), 3);
+    });
+
+    test('read self for emitter', () async {
+      final ref = RefForTest();
+      final creator = Emitter<int>(((ref, emit) async {
+        emit((ref.readSelf() ?? 0) + await Future.value(1));
+      }));
+
+      expect(await ref.watch(creator), 1);
+      ref.recreate(creator);
+      await Future.delayed(const Duration());
+      expect(await ref.watch(creator), 2);
+      ref.recreate(creator);
+      await Future.delayed(const Duration());
+      expect(await ref.watch(creator), 3);
+    });
+  });
+
   group('watch', () {
     test('watch creator', () {
       final ref = RefForTest();
@@ -356,6 +386,31 @@ void main() {
       await Future.delayed(const Duration());
       expect(await ref.watch(a), 1);
       expect(ref.elements, contains(a));
+    });
+
+    test('does not propagate if value is the same for creator', () {
+      final ref = RefForTest();
+      final value = [2];
+      final a = Creator.value(1);
+      final b = Creator(((ref) => ref.watch(a) * value.removeAt(0)));
+
+      expect(ref.watch(b), 2);
+      ref.recreate(a);
+      expect(ref.watch(b), 2);
+    });
+
+    test('does not propagate if value is the same for emitter', () async {
+      final ref = RefForTest();
+      final value = [2];
+      final a = Creator.value(1);
+      final b = Emitter<int>((ref, emit) async =>
+          emit(ref.watch(a) * await Future.value(value.removeAt(0))));
+
+      expect(await ref.watch(b), 2);
+
+      ref.recreate(a);
+      await Future.delayed(const Duration());
+      expect(await ref.watch(b), 2);
     });
   });
 

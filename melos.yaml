@@ -1,0 +1,19 @@
+name: creator
+
+packages:
+  - packages/**
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  analyze: melos exec -- "dart analyze ."
+
+  generate: |
+    melos exec -c 1 --depends-on="build_runner" --no-flutter -- "dart run build_runner build --delete-conflicting-outputs" && \
+    melos exec -c 1 --depends-on="build_runner" --flutter -- "flutter pub run build_runner build --delete-conflicting-outputs" 
+
+  test: |
+    melos exec -c 1 --no-flutter -- dart test && \
+    melos exec -c 1 --flutter -- flutter test

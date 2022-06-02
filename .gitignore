@@ -25,3 +25,4 @@ coverage.lcov
 # Dart
 **/doc/api/
 .dart_tool/
+pubspec_overrides.yaml

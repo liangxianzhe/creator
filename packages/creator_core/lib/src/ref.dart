@@ -118,6 +118,19 @@ class Ref {
     return _element<T>(creator, autoDispose: true).getState();
   }
 
+  /// Read the current state of the ref owner. This allows creators to have
+  /// memories. Note that the creator needs defined in a stable variable or use
+  /// args if using this method. See [CreatorBase.args].
+  T? readSelf<T>() {
+    assert(_owner != null, 'readSelf is called outside of create method');
+    if (!_elements.containsKey(_owner)) {
+      return null;
+    }
+    return _owner is Creator<T>
+        ? _element(_owner! as Creator<T>).state
+        : (_element(_owner! as Emitter<T>) as EmitterElement<T>).value;
+  }
+
   /// Read the current state of the creator, also establish the dependency
   /// [creator] -> [_owner].
   T watch<T>(CreatorBase<T> creator) {
