@@ -1,3 +1,7 @@
+## 0.1.4
+
+- Add Ref.readSelf so creator can have memory. 
+
 ## 0.1.3
 
 - Allow Creator to set its dependency. 
