@@ -1,6 +1,10 @@
+## 0.1.3
+
+- Allow Creator to set its dependency. 
+
 ## 0.1.2
 
-- Fixed an issue related to defining creator as local variable. 
+- Fix an issue related to defining creator as local variable. 
 
 ## 0.1.1
 
