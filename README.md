@@ -118,11 +118,11 @@ Table of content:
 When we built our Flutter app, we started with
 [flutter_bloc](https://github.com/felangel/bloc). Later we switched to
 [riverpod](https://github.com/rrousselGit/riverpod). However, we encountered
-several issues related to its async providers and realized we want a different
+several issues related to its async providers and realized we wanted a different
 mechanism.
 
-So we built Creator. It is heavily inspired by `riverpod`, but with simpler
-data model, better async support, and much-simplified implementation.
+So we built Creator. It is heavily inspired by `riverpod`, but with a simpler
+data model, better async support, and a much simpler implementation.
 
 The benefit of using Creator:
 
@@ -153,7 +153,7 @@ the graph for the weather example above:
 ## Creator
 
 `Creator` takes a function you write to create a state. The function takes a `Ref`, which
-provides API to interact with the internal graph. 
+provides API to interact with the internal graph.
 
 ```dart
 final number = Creator.value(42);  // Same as Creator((ref) => 42)
@@ -303,7 +303,7 @@ Watcher((context, ref, child) {
 
 Watching a creator will get its latest state. What if you also want previous
 state? Simply call `watch(someCreator.change)` to get a `Change<T>`, which is
-an object with two properties `T? before` and `T after`. 
+an object with two properties `T? before` and `T after`.
 
 For your convenience, `Watcher` can also take a listener:
 
@@ -373,7 +373,7 @@ Note that `Creator` needs to have valid state at the beginning, while `where((n)
 => n.isOdd)` cannot guarantee that. This is why `where` returns an `Emitter`
 rather than a `Creator`. Here is the implementation of the `where` method. It
 is quite simple and you can write similar extensions if you want:
- 
+
 ```dart
 extension CreatorExtension<T> on Creator<T> {
   Emitter<T> where(bool Function(T) test) {
@@ -593,7 +593,7 @@ Read creator library in this order:
 Well, we have been using it in production for our own app
 ([Chooly](https://chooly.app)). However, since it is new to the
 community, the API might change as we take feedback. So the suggestion for now:
-read the source code and make your own call. 
+read the source code and make your own call.
 
 ## Is it bad to define creator as global variable?
 
