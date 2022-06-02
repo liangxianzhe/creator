@@ -138,7 +138,10 @@ class CreatorElement<T> extends ElementBase<T> {
     // No need to recreate if initializing, since create is called in
     // constructor already.
     if (created) {
-      ref._onCreateStart();
+      // Return if creation is not allowed, i.e. another job is in progress.
+      if (!ref._onCreateStart()) {
+        return;
+      }
       final prevState = this.prevState; // Save in case of error
       this.prevState = state;
       try {
@@ -228,7 +231,7 @@ class EmitterElement<T> extends ElementBase<Future<T>> {
 
   @override
   Future<void> recreate({bool autoDispose = false}) async {
-    // Return if creation is not allowed, i.e. there is another job in progress.
+    // Return if creation is not allowed, i.e. another job is in progress.
     if (!ref._onCreateStart()) {
       return;
     }

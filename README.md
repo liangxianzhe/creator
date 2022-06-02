@@ -98,7 +98,9 @@ Table of content:
   - [Testing](#testing)
 - [Example](#example)
   - [Counter](#counter)
+  - [Decremental counter](#decremental-counter)
   - [Weather](#weather)
+  - [News](#news)
   - [Graph](#graph)
 - [Best practice](#best-practice)
 - [Read source code](#read-source-code)
@@ -173,7 +175,7 @@ To update the creator's state, use either `set` or `update`:
 
 ```dart
 ... ref.set(number, 42);  // No-op if value is the same
-... ref.update(number, (n) => n + 10);
+... ref.update<int>(number, (n) => n + 10);
 ```
 
 You can also `read` a creator when `watch` doesn't make sense, for example, inside
@@ -520,11 +522,19 @@ test('temperature creator change fahrenheit value', () async {
 
 # Example
 
+Source code [here](https://github.com/terryl1900/creator/blob/master/packages/creator/example/lib).
+
 ## Counter
 
 [DartPad](https://dartpad.dev/?id=911a1919b2b7125cc1f8c69e3c07caf9)
 
 A counter app shows basic Creator/Watcher usage.
+
+## Decremental counter
+
+[DartPad](https://dartpad.dev/?id=1a4c338fdf8ef7c4af8f80ddff88f4ec)
+
+A counter app shows how to hide state and expose state mutate APIs.
 
 ## Weather
 
@@ -532,6 +542,13 @@ A counter app shows basic Creator/Watcher usage.
 
 Simple weather app shows splitting backend/logic/ui code and writing logic
 with Creator and Emitter.
+
+## News
+
+[DartPad](https://dartpad.dev/?id=a6d82a6bb955fa4f42ff50b6c6d90d34)
+
+Simple news app with infinite list of news. It shows combining creators
+for loading indicator and fetching data with pagination.
 
 ## Graph
 

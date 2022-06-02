@@ -82,12 +82,6 @@ class _WatcherState extends State<Watcher> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     ref = CreatorGraphData.of(context).ref; // Save ref to use in dispose.
-    _setup();
-  }
-
-  @override
-  void didUpdateWidget(covariant Watcher oldWidget) {
-    super.didUpdateWidget(oldWidget);
     _dispose();
     _setup();
   }

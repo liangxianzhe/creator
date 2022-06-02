@@ -238,15 +238,15 @@ class Ref {
 
   /// Propagate the state change.
   void _notifyWatcher<T>(CreatorBase creator) {
-    for (final watcher in Set.from(_graph.from(creator))) {
+    for (final watcher in {..._graph.from(creator)}) {
       if (!_elements.containsKey(watcher)) {
         // This means watcher is a Creator and its create function is called
         // in CreatorElement's constructor, and it is not finished yet.
         continue;
       } else if (!_element(creator).created && _before.containsKey(watcher)) {
-        // This means [creator] is actually being newly created because
-        // [watcher] watches it during its recreate process. There is no need to
-        // propagate, because [watcher] can get [creator]'s state directly from
+        // This means creator is actually being newly created because
+        // watcher watches it during its recreate process. There is no need to
+        // propagate, because watcher can get creator's state directly from
         // Ref.watch's return.
         continue;
       }
