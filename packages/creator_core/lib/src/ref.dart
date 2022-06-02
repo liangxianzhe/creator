@@ -113,7 +113,8 @@ class Ref {
 
   /// Read the current state of the creator.
   /// - If creator is already in the graph, its value is returned.
-  /// - If creator is not in the graph, it is added to the graph then removed.
+  /// - If creator is not in the graph, it is added to the graph to get the
+  ///   state, then removed unless keepAlive is set.
   T read<T>(CreatorBase<T> creator) {
     return _element<T>(creator, autoDispose: true).getState();
   }

@@ -156,7 +156,7 @@ class CreatorElement<T> extends ElementBase<T> {
         ref._onError(creator, error);
       }
     }
-    if (autoDispose) {
+    if (autoDispose && !creator.keepAlive) {
       ref.dispose(creator);
     }
     if (created) {
@@ -257,7 +257,7 @@ class EmitterElement<T> extends ElementBase<Future<T>> {
       this.error = error;
       ref._onError(creator, error);
     }
-    if (autoDispose) {
+    if (autoDispose && !creator.keepAlive) {
       ref.dispose(creator);
     }
     ref._onCreateFinish();

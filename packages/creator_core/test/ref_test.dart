@@ -59,6 +59,13 @@ void main() {
       expect(ref.read(creator), 1);
       expect(ref.elements.keys, {creator});
     });
+
+    test('read keep alive creator should not dispose it', () {
+      final ref = RefForTest();
+      final creator = Creator.value(1, keepAlive: true);
+      expect(ref.read(creator), 1);
+      expect(ref.elements.keys, {creator});
+    });
   });
 
   group('read self', () {

@@ -1,3 +1,7 @@
+## 0.1.5
+
+- Ref.read should not dispose creators with keepAlive set. 
+
 ## 0.1.4
 
 - Add Ref.readSelf so creator can have memory. 
