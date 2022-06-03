@@ -579,7 +579,7 @@ list. It can automatically delete nodes which become zero out-degree.
 * **[creator.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/creator.dart)**: the CreatorBase class and its two sub classes, Creator and Emitter. 
 Their main job is to recreate state when asked.
 * **[ref.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/ref.dart)**: manages the graph and provides `watch`, `read`, `set` methods to user. 
-* [extension.dart](https://github.com/terryl1900/creator/blob/master/packages/creator/lib/src/extension.dart): implement extension methods `map`, `where`, etc.
+* [extension.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/extension.dart): implement extension methods `map`, `where`, etc.
 
 Read creator library in this order:
 
@@ -641,3 +641,6 @@ is started, so its watchers are still blocked until the future is finished.
 # That's it
 Hope you enjoyed reading this doc and will enjoy using Creator. Feedback and
 contribution are welcome!
+
+If you use Creator in your app, let us know your experience (positive or negative).
+Create a Github issue or email terry@chooly.app .

@@ -3,6 +3,9 @@ name: Build
 on:
   push:
   pull_request:
+  schedule:
+    # runs at 9AM
+    - cron: "0 9 * * *"
 
 jobs:
   build:
