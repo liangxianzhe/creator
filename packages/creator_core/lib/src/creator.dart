@@ -136,10 +136,10 @@ class CreatorElement<T> extends ElementBase<T> {
   void recreate({CreatorBase? reason, bool autoDispose = false}) {
     error = null;
     if (!created) {
-      ref._onStateChange(creator, prevState, state);
-    } else {
       // No need to recreate if initializing, since create is called in
       // constructor already.
+      ref._onStateChange(creator, prevState, state);
+    } else {
       if (!ref._onCreateStart()) {
         // Return if creation is not allowed, i.e. another job is in progress.
         return;

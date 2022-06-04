@@ -50,7 +50,7 @@ final cityCreator = Creator.value('London');
 final unitCreator = Creator.value('Fahrenheit');
 
 // Write fluid code with methods like map, where, etc.
-final fahrenheitCreator = cityCreator.mapAsync(getFahrenheit);
+final fahrenheitCreator = cityCreator.asyncMap(getFahrenheit);
 
 // Combine creators for business logic. 
 final temperatureCreator = Emitter<String>((ref, emit) async {
@@ -163,7 +163,7 @@ final double = Creator((ref) => ref.watch(number) * 2);
 Calling watch adds an edge `number` -> `double` to the graph, so `double`'s create
 function will rerun whenever `number`'s state changes.
 
-The nice part is that creator comes with methods like `map`, `where`, etc. They
+The nice part is that creator comes with methods like `map`, `where`, `reduce`, etc. They
 are similar to those methods in Iterable or Stream. So `double` can
 simply be:
 
@@ -361,7 +361,7 @@ Creators comes with factory methods `arg1` `arg2` `arg3` which take in 1-3 argum
 ## Extension method
 
 Our favorite part of the framework is that you can use methods like `map`,
-`where` on creators (full list [here](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/extension.dart)). They are similar to those methods in
+`where`, `reduce` on creators (full list [here](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/extension.dart)). They are similar to those methods in
 Iterable or Stream.
 
 ```dart

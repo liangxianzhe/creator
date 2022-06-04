@@ -20,7 +20,7 @@ final cityCreator = Creator.value('London');
 final unitCreator = Creator.value('Fahrenheit');
 
 // Write fluid code with extensions like map, where, reduce, etc.
-final fahrenheitCreator = cityCreator.mapAsync(getFahrenheit);
+final fahrenheitCreator = cityCreator.asyncMap(getFahrenheit);
 
 // Get temperature with data from backend and user's unit selection.
 final temperatureCreator = Emitter<String>((ref, emit) async {
