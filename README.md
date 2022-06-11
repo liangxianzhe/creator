@@ -346,7 +346,7 @@ thus we need multiple instance of `profileCreator`.
 ```dart
 // Instagram has four tabs: instagram, reels, video, tagged
 final tabCreator = Creator.arg1<Tab, String>((ref, userId) => 'instagram');
-final profileCreator = Emitter.arg1<Profile, String>((ref, emit, userId) async {
+final profileCreator = Emitter.arg1<Profile, String>((ref, userId, emit) async {
   final tab = ref.watch(tabCreator(userId));
   emit(await fetchProfileData(userId, tab));  // Call backend
 });
