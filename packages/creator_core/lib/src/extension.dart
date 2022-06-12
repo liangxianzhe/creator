@@ -40,11 +40,7 @@ extension CreatorExtension<T> on Creator<T> {
     return Creator((ref) {
       final previous = ref.readSelf();
       final element = ref.watch(this);
-      if (previous == null) {
-        return element;
-      } else {
-        return combine(previous, element);
-      }
+      return previous == null ? element : combine(previous, element);
     }, name: name ?? '${infoName}_reduce', keepAlive: keepAlive, args: args);
   }
 }
@@ -89,11 +85,7 @@ extension EmitterExtension<T> on Emitter<T> {
     return Emitter<T>((ref, emit) async {
       final previous = ref.readSelf();
       final element = await ref.watch(this);
-      if (previous == null) {
-        emit(element);
-      } else {
-        emit(combine(previous, element));
-      }
+      emit(previous == null ? element : combine(previous, element));
     }, name: name ?? '${infoName}_map', keepAlive: keepAlive, args: args);
   }
 

@@ -552,6 +552,19 @@ void main() {
       expect(ref.watch(c), 2);
     });
 
+    test('error in creator propagates to change', () {
+      final ref = RefForTest();
+      final a = Creator.value('1');
+      final b = Creator(((ref) => int.parse(ref.watch(a))));
+      final c = Creator(((ref) => ref.watch(b) * 2));
+
+      expect(ref.watch(b.change), Change(null, 1));
+      expect(ref.watch(c.change), Change(null, 2));
+      ref.set(a, 'invalid');
+      expect(() => ref.watch(b.change), throwsFormatException);
+      expect(() => ref.watch(c.change), throwsFormatException);
+    });
+
     test('error in emitter', () async {
       final ref = RefForTest();
       final a =
@@ -567,6 +580,43 @@ void main() {
       await Future.delayed(const Duration());
       expect(() async => await ref.watch(b), throwsFormatException);
       expect(() async => await ref.watch(c), throwsFormatException);
+    });
+
+    test('error in emitter propagate to change', () async {
+      final ref = RefForTest();
+      final a =
+          Emitter<String>((ref, emit) async => emit(await Future.value('1')));
+      final b = Emitter<int>(
+          ((ref, emit) async => emit(int.parse(await ref.watch(a)))));
+      final c =
+          Emitter<int>(((ref, emit) async => emit(await ref.watch(b) * 2)));
+
+      expect(await ref.watch(b.change), Change(null, 1));
+      expect(await ref.watch(c.change), Change(null, 2));
+      ref.set(a, Future.value('invalid'));
+      await Future.delayed(const Duration());
+      expect(() async => await ref.watch(b.change), throwsFormatException);
+      expect(() async => await ref.watch(c.change), throwsFormatException);
+    });
+
+    test('error in emitter propagate to asyncData', () async {
+      final ref = RefForTest();
+      final a =
+          Emitter<String>((ref, emit) async => emit(await Future.value('1')));
+      final b = Emitter<int>(
+          ((ref, emit) async => emit(int.parse(await ref.watch(a)))));
+      final c =
+          Emitter<int>(((ref, emit) async => emit(await ref.watch(b) * 2)));
+
+      ref.watch(c.asyncData);
+      await Future.delayed(const Duration());
+
+      expect(ref.watch(b.asyncData), AsyncData.withData(1));
+      expect(ref.watch(c.asyncData), AsyncData.withData(2));
+      ref.set(a, Future.value('invalid'));
+      await Future.delayed(const Duration());
+      expect(() => ref.watch(b.asyncData), throwsFormatException);
+      expect(() => ref.watch(c.asyncData), throwsFormatException);
     });
   });
 

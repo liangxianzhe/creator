@@ -460,14 +460,14 @@ State management libraries are commonly used as service locators:
 class UserRepo {
   void changeName(User user, String name) {...}
 }
-final userRepo = Creator.value(UserRepo());
+final userRepo = Creator.value(UserRepo(), keepAlive: true);
 
 ... context.ref.read(userRepo).changeName(user, name);
 ```
 
 If needed, `ref` can be passed to UserRepo  `Creator((ref) => UserRepo(ref))`. 
 This allows UserRepo `read` or `set` other creators. Do not `watch` though,
-because it will make UserRepo rebuild.
+because it might recreate UserRepo.
 
 ## Error handling
 
@@ -503,6 +503,8 @@ Widget build(BuildContext context) {
 Testing creator is quite easy by combining `watch`, `read`, `set`. Use the weather app above as an example:
 
 ```dart
+// No setUp, no tearDown, no mocks. Writing tests becomes fun.
+
 test('temperature creator change unit', () async {
   final ref = Ref();
   expect(await ref.watch(temperatureCreator), "60 F");
@@ -641,6 +643,6 @@ is started, so its watchers are still blocked until the future is finished.
 # That's it
 Hope you enjoyed reading this doc and will enjoy using Creator. Feedback and
 contribution are welcome!
-
-If you use Creator in your app, let us know your experience (positive or negative).
-Create a Github issue or email terry@chooly.app .
+  
+* Let us know your experience using Creator (github issue or terry@chooly.app).
+* Upvote this [issue](https://github.com/dart-lang/dart-pad/issues/2288) so we can build DartPad example easier.
