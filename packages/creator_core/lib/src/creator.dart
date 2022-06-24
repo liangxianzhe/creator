@@ -1,7 +1,7 @@
 part of 'core.dart';
 
 /// Base class of creators. Creators describe the graph dependencies.
-/// Also see [ElementBase]
+/// Also see [ElementBase]. Note that T should be immutable data.
 abstract class CreatorBase<T> {
   const CreatorBase({this.name, this.keepAlive = false, this.args});
 

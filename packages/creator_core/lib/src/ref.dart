@@ -156,7 +156,8 @@ class Ref {
     }
   }
 
-  /// Set state of creator using an update function. See [set].
+  /// Set state of creator using an update function. See [set]. No-op if the
+  /// state doesn't change.
   void update<T>(CreatorBase<T> creator, T Function(T) update) {
     set<T>(creator, update(_element(creator).state));
   }

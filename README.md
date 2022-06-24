@@ -171,13 +171,6 @@ simply be:
 final double = number.map((n) => n * 2);
 ```
 
-To update the creator's state, use either `set` or `update`:
-
-```dart
-... ref.set(number, 42);  // No-op if value is the same
-... ref.update<int>(number, (n) => n + 10);
-```
-
 You can also `read` a creator when `watch` doesn't make sense, for example, inside
 a touch event handler.
 
@@ -186,6 +179,17 @@ TextButton(
   onPressed: () => print(context.ref.read(number)),
   child: const Text('Print'));
 ```
+
+To update the creator's state, use either `set` or `update`:
+
+```dart
+... ref.set(number, 42);  // No-op if value is the same
+... ref.update<int>(number, (n) => n + 10);  // Same as read then set
+```
+
+Note that creator works with immutable data and determines state change with `T.==`.
+* If `T` is a class, define with a const constructor or use package like `equatable`.
+* If `T` is a list, create a new list rather than update the existing one.  
 
 Creator's dependency can be dynamic:
 
