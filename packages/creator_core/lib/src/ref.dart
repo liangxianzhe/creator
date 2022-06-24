@@ -145,10 +145,11 @@ class Ref {
   /// Set state of the creator. Typically this is used to set the state for
   /// creator with no dependency, but the framework allows setting state for any
   /// creator. No-op if the state doesn't change.
-  void set<T>(CreatorBase<T> creator, T state) {
+  /// When [force] is set to true, the new state will be treated as a change
+  void set<T>(CreatorBase<T> creator, T state, {bool force = false}) {
     final element = _element<T>(creator, recreate: false);
     final before = element.state;
-    if (before != state) {
+    if (before != state || force) {
       element.prevState = element.state;
       element.state = state;
       element.error = null;
@@ -158,7 +159,7 @@ class Ref {
 
   /// Set state of creator using an update function. See [set].
   void update<T>(CreatorBase<T> creator, T Function(T) update) {
-    set<T>(creator, update(_element(creator).state));
+    set<T>(creator, update(_element(creator).state), force: true);
   }
 
   /// Recreate the state of a creator. It is typically used when things outside
