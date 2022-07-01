@@ -111,6 +111,7 @@ Table of content:
   - [How does creator's life cycle work?](#how-does-creators-life-cycle-work)
   - [What's the difference between `context.ref` vs `ref` in `Creator((ref) => ...)`?](#whats-the-difference-between-contextref-vs-ref-in-creatorref--)
   - [What's the difference between `Creator<Future<T>>` vs `Emitter<T>`?](#whats-the-difference-between-creatorfuturet-vs-emittert)
+  - [What do I need to know if I'm a riverpod user?](#what-do-i-need-to-know-if-im-a-riverpod-user)
 - [That's it](#thats-it)
 
 # Why Creator?
@@ -187,8 +188,8 @@ To update the creator's state, use either `set` or `update`:
 ... ref.update<int>(number, (n) => n + 10);  // Same as read then set
 ```
 
-Note that creator works with immutable data and determines state change with `T.==`.
-* If `T` is a class, define with a const constructor or use package like `equatable`.
+Note creator determines state change using `T.==`, so it should work with immutable data.
+* If `T` is a class, use const constructor and override `==` and `hashCode`. Or use package like `equatable`.
 * If `T` is a list, create a new list rather than update the existing one.  
 
 Creator's dependency can be dynamic:
@@ -578,6 +579,10 @@ things we follow:
 Creator's implementation is surprisingly simple. In fact, the **core logic**
 is less than 500 lines of code.
 
+You can optionally read this
+[article](https://medium.com/@terryl1900/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd)
+first, which describes how we built the first version with 100 lines of code.
+
 Read creator_core library in this order:
 
 * **[graph.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/graph.dart)**: a simple implementation of a bi-directed graph using adjacency
@@ -643,6 +648,10 @@ of `T` or populate `AsyncData<T>` properly.
 * `Emitter<T>` notify its watcher when `T` is emitted, so its watchers can start 
 their work immediately. `Creator<Future<T>>` notify its watchers when the future 
 is started, so its watchers are still blocked until the future is finished. 
+
+## What do I need to know if I'm a riverpod user?
+
+Check [FAQ for riverpod user](https://github.com/terryl1900/creator/blob/master/doc/faq_for_riverpod_user.md).
 
 # That's it
 Hope you enjoyed reading this doc and will enjoy using Creator. Feedback and
