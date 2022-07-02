@@ -1,3 +1,8 @@
+## 0.1.7
+
+- Fix a minor issue about reducer's default name.
+- Documentation improvements. 
+
 ## 0.1.6
 
 - Add more extension methods. 
