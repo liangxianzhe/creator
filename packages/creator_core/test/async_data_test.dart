@@ -19,6 +19,7 @@ void main() {
       expect(AsyncData<int?>.withData(null).data, null);
     });
   });
+
   group('equality', (() {
     test('simple data', () {
       expect(AsyncData<int>.waiting(), AsyncData.waiting());
@@ -32,6 +33,7 @@ void main() {
           AsyncData.withData(_Data(42)), isNot(AsyncData.withData(_Data(42))));
     });
   }));
+
   group('hash code', (() {
     test('simple data', () {
       expect(AsyncData<int>.waiting().hashCode, AsyncData.waiting().hashCode);
@@ -48,4 +50,9 @@ void main() {
           isNot(AsyncData.withData(_Data(42)).hashCode));
     });
   }));
+
+  test('to string', () {
+    expect(AsyncData<int>.waiting().toString(), 'waiting');
+    expect(AsyncData.withData(42).toString(), '42');
+  });
 }

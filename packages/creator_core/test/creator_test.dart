@@ -194,4 +194,28 @@ void main() {
       expect(element.prevState, completion(3));
     });
   });
+
+  test('change', () {
+    final c1 = Change(1, 2);
+    final c2 = Change(1, 2);
+    expect(c1, c2);
+    expect(c1.hashCode, c2.hashCode);
+    expect(c1.toString(), '1->2');
+  });
+
+  test('creator change is stable', () {
+    final creator = Creator.value(42);
+    final c1 = creator.change;
+    final c2 = creator.change;
+    expect(c1, c2);
+    expect(c1.args, [creator, 'change']);
+  });
+
+  test('creator asyncData is stable', () {
+    final creator = Emitter<int>((ref, emit) => emit(42));
+    final c1 = creator.asyncData;
+    final c2 = creator.asyncData;
+    expect(c1, c2);
+    expect(c1.args, [creator, 'asyncData']);
+  });
 }

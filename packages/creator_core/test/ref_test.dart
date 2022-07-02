@@ -658,4 +658,15 @@ void main() {
       expect(ref.watch(emitter.asyncData), AsyncData.withData(2));
     });
   });
+
+  test('to string', () {
+    final ref = RefForTest();
+    final a = Creator.value(1, name: 'foo');
+    final b = Creator(((ref) => ref.watch(a) * 2), name: 'bar');
+    ref.watch(b);
+    expect(ref.graphString(), stringContainsInOrder(['foo', 'bar']));
+    expect(ref.graphDebugString(),
+        stringContainsInOrder(['Out', 'foo', 'bar', 'In', 'bar', 'foo']));
+    expect(ref.elementsString(), allOf(contains('foo'), contains('bar')));
+  });
 }

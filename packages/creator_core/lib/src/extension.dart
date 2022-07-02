@@ -86,7 +86,7 @@ extension EmitterExtension<T> on Emitter<T> {
       final previous = ref.readSelf();
       final element = await ref.watch(this);
       emit(previous == null ? element : combine(previous, element));
-    }, name: name ?? '${infoName}_map', keepAlive: keepAlive, args: args);
+    }, name: name ?? '${infoName}_reduce', keepAlive: keepAlive, args: args);
   }
 
   Emitter<F> expand<F>(Iterable<F> Function(T) convert,

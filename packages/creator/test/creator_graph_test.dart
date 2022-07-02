@@ -44,5 +44,12 @@ void main() {
       expect(ob.ignore(Creator.value(42, name: 'watcher')), true);
       expect(ob.ignore(Creator.value(42, name: 'listener')), true);
     });
+
+    test('not raising error', () {
+      final ob = DefaultCreatorObserver();
+      final creator = Creator.value(42);
+      ob.onStateChange(creator, 1, 2);
+      ob.onError(creator, 'error');
+    });
   });
 }

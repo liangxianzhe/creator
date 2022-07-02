@@ -17,6 +17,5 @@ class AsyncData<T> {
   bool operator ==(Object other) => other is AsyncData<T> && data == other.data;
 
   @override
-  String toString() =>
-      status == AsyncDataStatus.waiting ? 'waiting' : 'active($data)';
+  String toString() => status == AsyncDataStatus.waiting ? 'waiting' : '$data';
 }

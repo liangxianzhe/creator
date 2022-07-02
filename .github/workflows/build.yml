@@ -36,8 +36,14 @@ jobs:
       - name: Analyze
         run: melos exec -c 1 -- dart analyze .
 
+      - name: Install coverage
+        run: dart pub global activate coverage 
+
       - name: Run dart test
-        run: melos exec -c 1 --no-flutter -- dart test
+        run: melos exec -c 1 --no-flutter -- dart pub global run coverage:test_with_coverage 
 
       - name: Run flutter test
-        run: melos exec -c 1 --flutter -- flutter test
+        run: melos exec -c 1 --flutter -- "flutter test --coverage" 
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3

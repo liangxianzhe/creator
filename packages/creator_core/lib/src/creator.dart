@@ -76,16 +76,7 @@ abstract class ElementBase<T> {
   Object? error; // Capture the exception happened during create.
 
   /// Get error-aware state.
-  T getState() {
-    if (error != null) {
-      if (T is Future) {
-        return Future.error(error!) as T;
-      } else {
-        throw error!;
-      }
-    }
-    return state;
-  }
+  T getState() => error != null ? throw (error!) : state;
 
   /// Whether the creator has been created at least once.
   bool created = false;

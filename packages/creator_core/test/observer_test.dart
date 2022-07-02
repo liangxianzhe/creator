@@ -50,4 +50,20 @@ void main() {
       ob.onStateChange(creator, 2, 3),
     ]);
   });
+
+  group('observer not raising error', () {
+    test('default observer', () {
+      final ob = DefaultCreatorObserver();
+      final creator = Creator.value(42);
+      ob.onStateChange(creator, 41, 42);
+      ob.onError(creator, 'some error');
+    });
+
+    test('empty observer', () {
+      final ob = CreatorObserver();
+      final creator = Creator.value(42);
+      ob.onStateChange(creator, 41, 42);
+      ob.onError(creator, 'some error');
+    });
+  });
 }
