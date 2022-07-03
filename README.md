@@ -128,9 +128,10 @@ data model, better async support, and a much simpler implementation.
 
 The benefit of using Creator:
 
-* Enables concise, fluid, readable, and testable code.
-* Expressive for both sync and async behavior.
-* Simple concept. Simple implementation. Lightweight.
+* Enables concise, fluid, readable, and testable business logic. Sync or async.
+* No need to worry when to "provide" creators.
+* Concept is extremely simple and easy to learn.
+* No magic. Build the library yourself with [100 lines of code](https://medium.com/@terryl1900/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd).
 
 # Concept
 
