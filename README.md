@@ -131,7 +131,7 @@ The benefit of using Creator:
 * Enables concise, fluid, readable, and testable business logic. Sync or async.
 * No need to worry when to "provide" creators.
 * Concept is extremely simple and easy to learn.
-* No magic. Build the library yourself with [100 lines of code](https://medium.com/@terryl1900/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd).
+* No magic. Build this library yourself with [100 lines of code](https://medium.com/@terryl1900/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd).
 
 # Concept
 
@@ -146,10 +146,13 @@ Both `Creator` and `Emitter`:
 * Can depend on other creators, and update its state when others' state changes.
 * Are loaded lazily and disposed automatically.
 
-Dependencies form a graph, and it is managed internally by the framework. This is
-the graph for the weather example above:
+Dependencies form a graph, for example, this is the graph for the weather
+example above:
 
 ![weather](https://github.com/terryl1900/creator/blob/master/resource/weather.png?raw=true)
+
+The library simply maintains the graph with an adjacency list and propagates
+state changes along the edges.
 
 # Usage
 
@@ -204,7 +207,7 @@ final C = Creator((ref) {
 ```
 
 In this example, `A` -> `C` always exists, `B` -> `C` may or may not exist. The
-framework will update the graph properly as dependency changes.
+library will update the graph properly as dependency changes.
 
 ## Emitter
 
@@ -294,10 +297,12 @@ creator state changes. It can be replaced with your own log collection observer.
 
 ## Watcher
 
-Watcher is a StatefulWidget. It takes builder function `Widget
-Function(BuildContext context, Ref ref, Widget child)`. You can use `ref` to
-watch creators to populate the widget. `child` can be used optionally if the
-subtree should not rebuild when dependency changes:
+Watcher is a simple StatefulWidget which holds a `Creator<Widget>` internally
+and calls `setState` when its dependency changes.
+
+It takes builder function `Widget Function(BuildContext context, Ref ref, Widget
+child)`. You can use `ref` to watch creators to populate the widget. `child` can
+be used optionally if the subtree should not rebuild when dependency changes:
 
 ```dart
 Watcher((context, ref, child) {
@@ -312,7 +317,8 @@ Watching a creator will get its latest state. What if you also want previous
 state? Simply call `watch(someCreator.change)` to get a `Change<T>`, which is
 an object with two properties `T? before` and `T after`.
 
-For your convenience, `Watcher` can also take a listener:
+For your convenience, `Watcher` can also take a listener. It can be used to
+achieve side effects or run background tasks:
 
 ```dart
 // If builder is null, child widget is directly returned. You can set both
@@ -367,7 +373,7 @@ Creators comes with factory methods `arg1` `arg2` `arg3` which take in 1-3 argum
 
 ## Extension method
 
-Our favorite part of the framework is that you can use methods like `map`,
+Our favorite part of the library is that you can use methods like `map`,
 `where`, `reduce` on creators (full list [here](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/extension.dart)). They are similar to those methods in
 Iterable or Stream.
 
@@ -434,7 +440,7 @@ correct data, but there is an extra cost to swap the node in the graph. Because 
 change is localized to only one node, the cost can be ignored as long as the
 create function is simple.
 
-If needed, an optional `List<Object?> args` can be set to ask the framework to
+If needed, an optional `List<Object?> args` can be set to ask the library to
 find an existing creator with the same `args` in the graph. Now when number
 changes, the graph won't change:
 
@@ -478,7 +484,7 @@ because it might recreate UserRepo.
 
 ## Error handling
 
-The framework will:
+The library will:
 * For `Creator`, store exception happened during create and throw it when watch.
 * For `Emitter`, naturally use Future.error, so error is returned when watch. 
 * In either case, error is treated as a state change.
@@ -563,7 +569,7 @@ for loading indicator and fetching data with pagination.
 
 [DartPad](https://dartpad.dev/?id=77a60e33349a20c6623d163146378c5d)
 
-Simple app shows how the creator framework builds the internal graph dynamically.
+Simple app shows how the creator library builds the internal graph dynamically.
 
 # Best practice
 
