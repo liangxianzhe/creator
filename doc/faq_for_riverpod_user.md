@@ -33,9 +33,10 @@ So, I believe Creator could benefit Flutter community overall.
 
 3. Creator has a nicer async API.
 
-   Using `Emitter`, you can `emit` zero or multiple times. Its state is a `Future<T>`,
-   which is natural for writing business logic.
-  
+   Using `Emitter`, you can `emit` zero or multiple times. You can combine
+   `emit` and `set` to express complex logic concisely
+   ([example](https://dartpad.dev/?id=a6d82a6bb955fa4f42ff50b6c6d90d34)).
+   
 4. Creator has extension methods.
 
    Creator has methods like `map`, `where`, and `reduce`, which are quite handy
@@ -50,10 +51,8 @@ So, I believe Creator could benefit Flutter community overall.
    [article](https://medium.com/@terryl1900/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd)
    then read the [source
    code](https://github.com/terryl1900/creator#read-source-code).
-   
-## How does riverpod providers map to creators?
 
-Just use Emitter for anything with `async` and use Creator for the rest. Or follow this:
+## How does riverpod providers map to creators?
 
 | Riverpod  | Creator |
 | ------------- | ------------- |
@@ -63,12 +62,6 @@ Just use Emitter for anything with `async` and use Creator for the rest. Or foll
 | StreamProvider | Emitter.stream  |
 | StateNotifierProvider  | Creator with a file-level private variable ([example](https://dartpad.dev/?id=1a4c338fdf8ef7c4af8f80ddff88f4ec)) or a class-level private variable |
 | ChangeNotifierProvider | Not supported. Note ChangeNotifierProvider is not encouraged in riverpod  |
-
-## What else do I need to know if I'm migrating from riverpod?
-
-* Creator is default to auto dispose, while provider is default to keep alive.
-* Creator group can take 1 to 3 arguments, while provider family only takes 1 argument.
-* With creator, you can combine `emit`, `set` to express complex logic concisely ([example](https://dartpad.dev/?id=a6d82a6bb955fa4f42ff50b6c6d90d34)).
 
 ## Can I use both riverpod and creator in one project?
 
