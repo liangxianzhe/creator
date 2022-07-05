@@ -54,6 +54,8 @@ So, I believe Creator could benefit Flutter community overall.
 
 ## How does riverpod providers map to creators?
 
+Just use Emitter for anything with `async` and use Creator for the rest. Or follow this:
+
 | Riverpod  | Creator |
 | ------------- | ------------- |
 | Provider  | Creator  |
