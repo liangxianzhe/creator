@@ -1,3 +1,8 @@
+## 0.1.8
+
+- Fix an issue when null is the first emitted value. 
+- Add onDispose to observer. It defaults to do nothing though.
+
 ## 0.1.7
 
 - Fix a minor issue about reducer's default name.
