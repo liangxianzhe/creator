@@ -202,6 +202,7 @@ class Ref {
       _before.remove(creator);
       _after.remove(creator);
       _toCreate.remove(creator);
+      _observer?.onDispose(creator);
     }
   }
 

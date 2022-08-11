@@ -5,6 +5,7 @@ class CreatorObserver {
   const CreatorObserver();
   void onStateChange(CreatorBase creator, Object? before, Object? after) {}
   void onError(CreatorBase creator, Object? error) {}
+  void onDispose(CreatorBase creator) {}
 }
 
 /// Default observer which just log the new states.

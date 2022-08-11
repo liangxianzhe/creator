@@ -51,6 +51,20 @@ void main() {
     ]);
   });
 
+  test('observer is called when dispose', () {
+    final ob = MockDefaultCreatorObserver();
+    final ref = Ref(observer: ob);
+    final creator = Creator.value(1);
+
+    verifyZeroInteractions(ob);
+    ref.watch(creator);
+    ref.dispose(creator);
+    verifyInOrder([
+      ob.onStateChange(creator, null, 1),
+      ob.onDispose(creator),
+    ]);
+  });
+
   group('observer not raising error', () {
     test('default observer', () {
       final ob = DefaultCreatorObserver();
