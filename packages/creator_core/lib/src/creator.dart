@@ -229,18 +229,20 @@ class EmitterElement<T> extends ElementBase<Future<T>> {
     error = null;
     try {
       await (creator as Emitter<T>).create(ref, (newValue) {
-        if (value != newValue) {
-          if (!created) {
-            // emit is called the first time, let's wake up awaiting watchers.
-            completer.complete(newValue);
-          } else {
-            prevState = state;
-            state = Future<T>.value(newValue);
-          }
-          prevValue = value;
-          value = newValue;
-          ref._onStateChange(creator, prevValue, value);
+        if (created && value == newValue) {
+          return; // Nothing changes
         }
+        if (!created) {
+          // emit is called the first time, let's wake up awaiting watchers.
+          completer.complete(newValue);
+        } else {
+          prevState = state;
+          state = Future<T>.value(newValue);
+        }
+        prevValue = value;
+        value = newValue;
+        ref._onStateChange(creator, prevValue, value);
+
         // Emitter is considered created as long as emit is called once.
         created = true;
       });

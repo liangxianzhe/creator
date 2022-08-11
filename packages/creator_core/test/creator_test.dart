@@ -193,6 +193,36 @@ void main() {
       expect(element.state, completion(4));
       expect(element.prevState, completion(3));
     });
+
+    test('recreate when first emit is null', () {
+      final states = [null, 1];
+      final creator = Emitter<int?>((ref, emit) => emit(states.removeAt(0)));
+      final completer = Completer();
+      final element =
+          EmitterElement(RefForLifeCycleTest(creator), creator, completer);
+      expect(element.value, null);
+      expect(element.prevValue, null);
+      expect(element.state, completer.future);
+      expect(element.state, completion(null));
+      expect(element.prevState, null);
+      expect(element.created, false);
+
+      element.recreate();
+      expect(element.value, null);
+      expect(element.prevValue, null);
+      expect(element.state, completer.future);
+      expect(element.state, completion(null));
+      expect(element.created, true);
+
+      element.recreate();
+      expect(element.value, 1);
+      expect(element.prevValue, null);
+      expect(element.state, isNot(completer.future));
+      expect(element.state, completion(1));
+      expect(element.prevState, completer.future);
+      expect(element.prevState, completion(null));
+      expect(element.created, true);
+    });
   });
 
   test('change', () {
