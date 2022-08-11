@@ -1,8 +1,8 @@
-<p align="center"> <img height="80" src="https://github.com/terryl1900/creator/blob/master/resource/logo.png?raw=true"> </p>
+<p align="center"> <img height="80" src="https://github.com/liangxianzhe/creator/blob/master/resource/logo.png?raw=true"> </p>
 
 <p align="center">
 <a href="https://pub.dev/packages/creator"><img src="https://img.shields.io/pub/v/creator.svg" alt="Pub"></a>
-<a href="https://github.com/terryl1900/creator/actions"><img src="https://github.com/terryl1900/creator/workflows/Build/badge.svg" alt="build"></a>
+<a href="https://github.com/liangxianzhe/creator/actions"><img src="https://github.com/liangxianzhe/creator/workflows/Build/badge.svg" alt="build"></a>
 <a href="https://codecov.io/gh/terryl1900/creator"> <img src="https://codecov.io/gh/terryl1900/creator/branch/master/graph/badge.svg?token=C9L8AALWP4"/> </a>
 </p>
 
@@ -131,7 +131,7 @@ The benefit of using Creator:
 * Enables concise, fluid, readable, and testable business logic. Sync or async.
 * No need to worry when to "provide" creators.
 * Concept is extremely simple and easy to learn.
-* No magic. Build this library yourself with [100 lines of code](https://medium.com/@terryl1900/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd).
+* No magic. Build this library yourself with [100 lines of code](https://medium.com/@xianzhe/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd).
 
 # Concept
 
@@ -149,7 +149,7 @@ Both `Creator` and `Emitter`:
 Dependencies form a graph, for example, this is the graph for the weather
 example above:
 
-![weather](https://github.com/terryl1900/creator/blob/master/resource/weather.png?raw=true)
+![weather](https://github.com/liangxianzhe/creator/blob/master/resource/weather.png?raw=true)
 
 The library simply maintains the graph with an adjacency list and propagates
 state changes along the edges.
@@ -374,7 +374,7 @@ Creators comes with factory methods `arg1` `arg2` `arg3` which take in 1-3 argum
 ## Extension method
 
 Our favorite part of the library is that you can use methods like `map`,
-`where`, `reduce` on creators (full list [here](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/extension.dart)). They are similar to those methods in
+`where`, `reduce` on creators (full list [here](https://github.com/liangxianzhe/creator/blob/master/packages/creator_core/lib/src/extension.dart)). They are similar to those methods in
 Iterable or Stream.
 
 ```dart
@@ -537,7 +537,7 @@ test('temperature creator change fahrenheit value', () async {
 
 # Example
 
-Source code [here](https://github.com/terryl1900/creator/blob/master/packages/creator/example/lib).
+Source code [here](https://github.com/liangxianzhe/creator/blob/master/packages/creator/example/lib).
 
 ## Counter
 
@@ -588,22 +588,22 @@ Creator's implementation is surprisingly simple. In fact, the **core logic**
 is less than 500 lines of code.
 
 You can optionally read this
-[article](https://medium.com/@terryl1900/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd)
+[article](https://medium.com/@xianzhe/create-a-flutter-state-management-library-with-100-lines-of-code-e80bd865f4bd)
 first, which describes how we built the first version with 100 lines of code.
 
 Read creator_core library in this order:
 
-* **[graph.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/graph.dart)**: a simple implementation of a bi-directed graph using adjacency
+* **[graph.dart](https://github.com/liangxianzhe/creator/blob/master/packages/creator_core/lib/src/graph.dart)**: a simple implementation of a bi-directed graph using adjacency
 list. It can automatically delete nodes which become zero out-degree. 
-* **[creator.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/creator.dart)**: the CreatorBase class and its two sub classes, Creator and Emitter. 
+* **[creator.dart](https://github.com/liangxianzhe/creator/blob/master/packages/creator_core/lib/src/creator.dart)**: the CreatorBase class and its two sub classes, Creator and Emitter. 
 Their main job is to recreate state when asked.
-* **[ref.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/ref.dart)**: manages the graph and provides `watch`, `read`, `set` methods to user. 
-* [extension.dart](https://github.com/terryl1900/creator/blob/master/packages/creator_core/lib/src/extension.dart): implement extension methods `map`, `where`, etc.
+* **[ref.dart](https://github.com/liangxianzhe/creator/blob/master/packages/creator_core/lib/src/ref.dart)**: manages the graph and provides `watch`, `read`, `set` methods to user. 
+* [extension.dart](https://github.com/liangxianzhe/creator/blob/master/packages/creator_core/lib/src/extension.dart): implement extension methods `map`, `where`, etc.
 
 Read creator library in this order:
 
-* [creator_graph.dart](https://github.com/terryl1900/creator/blob/master/packages/creator/lib/src/creator_graph.dart): A simple InheritedWidget which expose `Ref` through context.
-* [watcher.dart](https://github.com/terryl1900/creator/blob/master/packages/creator/lib/src/watcher.dart): A stateful widget which holds a `Creator<Widget>` internally.
+* [creator_graph.dart](https://github.com/liangxianzhe/creator/blob/master/packages/creator/lib/src/creator_graph.dart): A simple InheritedWidget which expose `Ref` through context.
+* [watcher.dart](https://github.com/liangxianzhe/creator/blob/master/packages/creator/lib/src/watcher.dart): A stateful widget which holds a `Creator<Widget>` internally.
 
 # FAQ
 
@@ -659,11 +659,11 @@ is started, so its watchers are still blocked until the future is finished.
 
 ## What do I need to know if I'm a riverpod user?
 
-Check [FAQ for riverpod user](https://github.com/terryl1900/creator/blob/master/doc/faq_for_riverpod_user.md).
+Check [FAQ for riverpod user](https://github.com/liangxianzhe/creator/blob/master/doc/faq_for_riverpod_user.md).
 
 # That's it
 Hope you enjoyed reading this doc and will enjoy using Creator. Feedback and
-contribution are welcome!
+[contribution](https://github.com/liangxianzhe/creator/blob/master/doc/developer_guide.md) are welcome!
   
-* Let us know your experience using Creator (github issue or terry@chooly.app).
+* Let us know your experience using Creator.
 * Upvote this [issue](https://github.com/dart-lang/dart-pad/issues/2288) so we can build DartPad example easier.
