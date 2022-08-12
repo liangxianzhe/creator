@@ -3,7 +3,7 @@
 <p align="center">
 <a href="https://pub.dev/packages/creator"><img src="https://img.shields.io/pub/v/creator.svg" alt="Pub"></a>
 <a href="https://github.com/liangxianzhe/creator/actions"><img src="https://github.com/liangxianzhe/creator/workflows/Build/badge.svg" alt="build"></a>
-<a href="https://codecov.io/gh/terryl1900/creator"> <img src="https://codecov.io/gh/liangxianzhe/creator/branch/master/graph/badge.svg?token=C9L8AALWP4"/> </a>
+<a href="https://codecov.io/gh/liangxianzhe/creator"> <img src="https://codecov.io/gh/liangxianzhe/creator/branch/master/graph/badge.svg?token=C9L8AALWP4"/> </a>
 </p>
 
 Creator is a state management library that enables **concise, fluid, readable, and testable** business logic code.
