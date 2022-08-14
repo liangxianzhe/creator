@@ -1,3 +1,7 @@
+## 0.1.9
+
+- Add ref.emit to set emitter state directly. 
+
 ## 0.1.8
 
 - Fix an issue when null is the first emitted value. 
