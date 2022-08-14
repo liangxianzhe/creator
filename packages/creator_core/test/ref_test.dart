@@ -348,6 +348,56 @@ void main() {
     });
   });
 
+  group('emit', () {
+    test('emit emitter', () async {
+      final ref = RefForTest();
+      final a = Emitter<int>((ref, emit) async => emit(await Future.value(1)));
+      final b = Emitter<int>((ref, emit) async => emit(await ref.watch(a) * 2));
+
+      expect(await ref.watch(a), 1);
+      expect(await ref.watch(b), 2);
+
+      ref.emit(a, 10);
+      await Future.delayed(const Duration());
+      expect(await ref.watch(a), 10);
+      expect(await ref.watch(b), 20);
+    });
+
+    test('no op if value is the same', () async {
+      final ref = RefForTest();
+      final a = Emitter<int>((ref, emit) async => emit(await Future.value(1)));
+      final multi = [2];
+      final b = Emitter<int>(
+          (ref, emit) async => emit(await ref.watch(a) * multi.removeAt(0)));
+
+      expect(await ref.watch(a), 1);
+      expect(await ref.watch(b), 2);
+
+      ref.emit(a, 1);
+      await Future.delayed(const Duration());
+      expect(await ref.watch(a), 1);
+      expect(await ref.watch(b), 2);
+    });
+
+    test('emit adds creator to graph', () async {
+      final ref = RefForTest();
+      final a = Emitter<int>((ref, emit) async => emit(await Future.value(1)));
+      ref.emit(a, 10);
+      await Future.delayed(const Duration());
+      expect(await ref.watch(a), 10);
+      expect(ref.elements, contains(a));
+    });
+
+    test('recreate is not called when emit', () async {
+      final ref = RefForTest();
+      final a = Emitter<int>((ref, emit) async => emit(await Future.error('')));
+      ref.set(a, Future.value(1));
+      await Future.delayed(const Duration());
+      expect(await ref.read(a), 1);
+      expect(ref.elements, contains(a));
+    });
+  });
+
   group('recreate', () {
     test('recreate creator', () {
       final ref = RefForTest();

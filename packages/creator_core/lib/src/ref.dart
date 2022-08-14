@@ -162,6 +162,16 @@ class Ref {
     set<T>(creator, update(_element(creator).state));
   }
 
+  /// Set state of the emitter. Use this only if you control all the paths the
+  /// emitter could be recreated, to avoid the value emitted here override by
+  /// other state propagation flows.
+  /// This method is experimental, if people like it, we will change [set] to
+  /// work with Creator instead of CreatorBase.
+  void emit<T>(Emitter<T> emitter, T state) {
+    final element = _element(emitter, recreate: false) as EmitterElement<T>;
+    element.emit(state);
+  }
+
   /// Recreate the state of a creator. It is typically used when things outside
   /// the graph changes. For example, click to retry after a network error.
   /// If you use this method in a creative way, let us know.
