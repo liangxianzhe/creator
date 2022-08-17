@@ -631,7 +631,7 @@ final someCreator = Creator((ref) {
 
 ## How does creator's life cycle work?
 
-* It is added to the graph when firstly being watched.
+* It is added to the graph when firstly being watched or set.
 * It can be removed from the graph manually by `Ref.dispose`.
 * If it has watchers, it is automatically removed from the graph when losing all its
 watchers, unless keepAlive property is set.
