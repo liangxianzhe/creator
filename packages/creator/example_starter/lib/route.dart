@@ -24,7 +24,9 @@ class RouterNotifier extends ChangeNotifier {
   }, name: 'routerNotifier');
 }
 
-/// go_router creator.
+/// GoRouter creator. This is what being used by main.dart. It is also handy
+/// since as long as you have access to "ref", you can do
+/// ref.read(goRouter).go('some url').
 final goRouter = Creator((ref) {
   return GoRouter(
     initialLocation: Url.splash.url,

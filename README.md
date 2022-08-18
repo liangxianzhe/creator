@@ -98,11 +98,13 @@ Table of content:
   - [Error handling](#error-handling)
   - [Testing](#testing)
 - [Example](#example)
-  - [Counter](#counter)
-  - [Decremental counter](#decremental-counter)
-  - [Weather](#weather)
-  - [News](#news)
-  - [Graph](#graph)
+  - [Simple example](#simple-example)
+    - [Counter](#counter)
+    - [Decremental counter](#decremental-counter)
+    - [Weather](#weather)
+    - [News](#news)
+    - [Graph](#graph)
+  - [Starter template](#starter-template)
 - [Best practice](#best-practice)
 - [Read source code](#read-source-code)
 - [FAQ](#faq)
@@ -537,39 +539,48 @@ test('temperature creator change fahrenheit value', () async {
 
 # Example
 
+## Simple example
+
 Source code [here](https://github.com/liangxianzhe/creator/blob/master/packages/creator/example/lib).
 
-## Counter
+### Counter
 
 [DartPad](https://dartpad.dev/?id=911a1919b2b7125cc1f8c69e3c07caf9)
 
 A counter app shows basic Creator/Watcher usage.
 
-## Decremental counter
+### Decremental counter
 
 [DartPad](https://dartpad.dev/?id=1a4c338fdf8ef7c4af8f80ddff88f4ec)
 
 A counter app shows how to hide state and expose state mutate APIs.
 
-## Weather
+### Weather
 
 [DartPad](https://dartpad.dev/?id=344ee052cab2700bd084a78ac6362897)
 
 Simple weather app shows splitting backend/logic/ui code and writing logic
 with Creator and Emitter.
 
-## News
+### News
 
 [DartPad](https://dartpad.dev/?id=a6d82a6bb955fa4f42ff50b6c6d90d34)
 
 Simple news app with infinite list of news. It shows combining creators
 for loading indicator and fetching data with pagination.
 
-## Graph
+### Graph
 
 [DartPad](https://dartpad.dev/?id=77a60e33349a20c6623d163146378c5d)
 
 Simple app shows how the creator library builds the internal graph dynamically.
+
+## Starter template 
+
+Source code [here](https://github.com/liangxianzhe/creator/blob/master/packages/creator/exampler_starter). An async counter app with login! A minimal template to start a Flutter project with:
+* Go router for routing
+* Creator for state management.
+* Optional Firebase Auth, or your own auth mechanism.
 
 # Best practice
 

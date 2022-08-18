@@ -1,22 +1,17 @@
 # Starter
 
-A minimum template to structure a flutter project using:
-* go_router for routing.
-* creator for state management.
-* (optional) Firebase Auth for login.
+An async counter app with login! A minimal template to start a Flutter project with:
+* Go router for routing
+* Creator for state management.
+* Optional Firebase Auth, or your own auth mechanism.
 
-It set up the structure to split your code into:
-* Repo layer: data models and API calls.
-* Logic layer: controllers or view models.
-* View layer: all the widgets.
+There is zero unnecessary logic, so you can copy and good to go.
 
-It is simple:
-* No unnecessary logic, so you can just copy and use it for new project.
-* Or just browse the code and apply to existing project.
+![weather](https://github.com/liangxianzhe/creator/blob/master/resource/starter.jpg?raw=true)
 
 ## Getting Started
 
-1. You should create new project using `flutter create` to leverage new Flutter features:
+1. Create new project using `flutter create` to leverage new Flutter features:
 ```
 flutter create my_fancy_app
 ```
@@ -30,9 +25,9 @@ flutter pub add creator
 
 3. Delete the default counter app file `lib/main.dart` and `test/widget_test.dart`.
 
-4. Copy all files from this example's `lib` folder to your app's `lib` folder.
+4. Copy all files from this `lib` folder to your app's `lib` folder.
 
-5. You are good to go. Run the app and start making your fancy app!
+5. You are good to go. Start making your fancy app!
 
 ```
 flutter run
@@ -40,9 +35,17 @@ flutter run
 
 6. [Optional] To use Firebase Auth, follow comments in `lib/logic/auth_logic.dart`.
 
-## What the template does
+# Folder structure
 
-It is better to just browse the source code. But here is what it does:
+It set up the structure to split your code into:
+* Repo layer: data models and API calls.
+* Logic layer: controllers or view models.
+* View layer: all the widgets.
+
+
+## What does the template do?
+
+Just browse the source code. But here is the gist:
 
 1. Defines a few basic urls.
 ```dart
@@ -79,6 +82,9 @@ void login(Ref ref, String email, String password) async {
 
 3. Builds a basic router that uses auth state for redirection.
 ```dart
+/// GoRouter creator. This is what being used by main.dart. It is also handy
+/// since as long as you have access to "ref", you can do
+/// ref.read(goRouter).go('some url').
 final goRouter = Creator((ref) {
   return GoRouter(
     initialLocation: Url.splash.url,
@@ -110,19 +116,33 @@ final goRouter = Creator((ref) {
 }, name: 'goRouter', keepAlive: true);
 ```
 
-4. Provides minimum sample of data model, API calls and async rendering. 
+4. Provides minimum sample for a async counter app (data model, API calls and async rendering). 
 ```dart
+// counter_model.dart
+
 /// An example data model
 class Counter {
   const Counter(this.count);
   final int count;
 }
 
+// counter_api.dart
+
 /// Fetch the user's counter from server. Fake the logic for now.
 Future<Counter> fetchCounter(String userId) async {
   await Future.delayed(const Duration(milliseconds: 500));
   return const Counter(42);
 }
+
+// counter_logic.dart
+
+/// Provide the counter data to view layer.
+final counterCreator = Emitter<Counter>((ref, emit) async {
+  final userId = await ref.watch(userCreator.where((u) => u != null));
+  emit(await fetchCounter(userId!));
+}, name: 'counter');
+
+// counter_view.dart
 
 class CounterView extends StatelessWidget {
   const CounterView({super.key});

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:creator/creator.dart';
 import 'package:example_starter/logic/auth_logic.dart';
 import 'package:flutter_test/flutter_test.dart';
