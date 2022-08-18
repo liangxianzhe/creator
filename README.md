@@ -577,7 +577,7 @@ Simple app shows how the creator library builds the internal graph dynamically.
 
 ## Starter template 
 
-Source code [here](https://github.com/liangxianzhe/creator/blob/master/packages/creator/exampler_starter). An async counter app with login! A minimal template to start a Flutter project with:
+Source code [here](https://github.com/liangxianzhe/creator/blob/master/packages/creator/example_starter). An async counter app with login! A minimal template to start a Flutter project with:
 * Go router for routing
 * Creator for state management.
 * Optional Firebase Auth, or your own auth mechanism.

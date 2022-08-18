@@ -35,7 +35,7 @@ flutter run
 
 6. [Optional] To use Firebase Auth, follow comments in `lib/logic/auth_logic.dart`.
 
-# Folder structure
+## Folder structure
 
 It set up the structure to split your code into:
 * Repo layer: data models and API calls.
