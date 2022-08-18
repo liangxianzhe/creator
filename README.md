@@ -71,7 +71,7 @@ Widget build(BuildContext context) {
   return Watcher((context, ref, _) => 
       Text(ref.watch(temperatureCreator.asyncData).data ?? 'loading'));
 }
-... context.ref.set(cityCreator, 'Pairs');  // triggers backend call
+... context.ref.set(cityCreator, 'Paris');  // triggers backend call
 ... context.ref.set(unitCreator, 'Celsius');  // doesn't trigger backend call
 ```
 
