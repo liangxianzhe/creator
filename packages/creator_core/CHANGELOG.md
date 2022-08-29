@@ -1,3 +1,29 @@
+## 0.2.0
+
+- [Breaking] Group creator name now takes arguments.
+
+Before:
+```
+final tabCreator = Creator.arg1<Tab, String>((ref, userId) => 'instagram', 
+    name: 'tab');
+```
+After:
+```
+final tabCreator = Creator.arg1<Tab, String>((ref, userId) => 'instagram',
+    name: (userId) => 'tab_$userId');
+```
+
+- [Breaking] ref.set and ref.update now only work for Creator. Use ref.emit to set Emitter.
+
+Before:
+```
+ref.set(someEmitter, Future.value(someNewValue));
+```
+After:
+```
+ref.emit(someEmitter, someNewValue);
+```
+
 ## 0.1.10
 
 - Improve error logs. 
