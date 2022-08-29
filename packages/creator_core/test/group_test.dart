@@ -4,9 +4,9 @@ import 'package:test/test.dart';
 void main() {
   test('creator group 1', () {
     final group = Creator.arg1<int, int>((ref, arg1) => arg1,
-        name: 'foo', keepAlive: true);
+        name: (arg1) => 'foo$arg1', keepAlive: true);
     final creator = group(1);
-    expect(creator.name, 'foo');
+    expect(creator.name, 'foo1');
     expect(creator.keepAlive, true);
     expect(creator.args, [group, 1]);
     expect(Ref().read(creator), 1);
@@ -14,9 +14,9 @@ void main() {
 
   test('creator group 2', () {
     final group = Creator.arg2<int, int, int>((ref, arg1, arg2) => arg1 + arg2,
-        name: 'foo', keepAlive: true);
+        name: (arg1, arg2) => 'foo$arg1$arg2', keepAlive: true);
     final creator = group(1, 2);
-    expect(creator.name, 'foo');
+    expect(creator.name, 'foo12');
     expect(creator.keepAlive, true);
     expect(creator.args, [group, 1, 2]);
     expect(Ref().read(creator), 3);
@@ -25,10 +25,10 @@ void main() {
   test('creator group 3', () {
     final group = Creator.arg3<int, int, int, int>(
         (ref, arg1, arg2, arg3) => arg1 + arg2 + arg3,
-        name: 'foo',
+        name: (arg1, arg2, arg3) => 'foo$arg1$arg2$arg3',
         keepAlive: true);
     final creator = group(1, 2, 3);
-    expect(creator.name, 'foo');
+    expect(creator.name, 'foo123');
     expect(creator.keepAlive, true);
     expect(creator.args, [group, 1, 2, 3]);
     expect(Ref().read(creator), 6);
@@ -37,10 +37,10 @@ void main() {
   test('emitter group 1', () async {
     final group = Emitter.arg1<int, int>(
         (ref, arg1, emit) async => emit(await Future.value(arg1)),
-        name: 'foo',
+        name: (arg1) => 'foo$arg1',
         keepAlive: true);
     final creator = group(1);
-    expect(creator.name, 'foo');
+    expect(creator.name, 'foo1');
     expect(creator.keepAlive, true);
     expect(creator.args, [group, 1]);
     expect(await Ref().read(creator), 1);
@@ -49,10 +49,10 @@ void main() {
   test('emitter group 2', () async {
     final group = Emitter.arg2<int, int, int>(
         (ref, arg1, arg2, emit) async => emit(await Future.value(arg1 + arg2)),
-        name: 'foo',
+        name: (arg1, arg2) => 'foo$arg1$arg2',
         keepAlive: true);
     final creator = group(1, 2);
-    expect(creator.name, 'foo');
+    expect(creator.name, 'foo12');
     expect(creator.keepAlive, true);
     expect(creator.args, [group, 1, 2]);
     expect(await Ref().read(creator), 3);
@@ -62,10 +62,10 @@ void main() {
     final group = Emitter.arg3<int, int, int, int>(
         (ref, arg1, arg2, arg3, emit) async =>
             emit(await Future.value(arg1 + arg2 + arg3)),
-        name: 'foo',
+        name: (arg1, arg2, arg3) => 'foo$arg1$arg2$arg3',
         keepAlive: true);
     final creator = group(1, 2, 3);
-    expect(creator.name, 'foo');
+    expect(creator.name, 'foo123');
     expect(creator.keepAlive, true);
     expect(creator.args, [group, 1, 2, 3]);
     expect(await Ref().read(creator), 6);
