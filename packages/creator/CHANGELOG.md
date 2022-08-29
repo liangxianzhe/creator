@@ -1,3 +1,7 @@
+## 0.1.10
+
+- Improve error logs. 
+
 ## 0.1.9
 
 - Add ref.emit to set emitter state directly. 
