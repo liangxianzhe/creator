@@ -4,7 +4,7 @@ import 'core.dart';
 class CreatorObserver {
   const CreatorObserver();
   void onStateChange(CreatorBase creator, Object? before, Object? after) {}
-  void onError(CreatorBase creator, Object? error) {}
+  void onError(CreatorBase creator, Object? error, StackTrace? stackTrace) {}
   void onDispose(CreatorBase creator) {}
 }
 
@@ -21,11 +21,11 @@ class DefaultCreatorObserver extends CreatorObserver {
   }
 
   @override
-  void onError(CreatorBase creator, Object? error) {
+  void onError(CreatorBase creator, Object? error, StackTrace? stackTrace) {
     if (ignore(creator)) {
       return;
     }
-    print('[Creator][Error] ${creator.infoName}: $error');
+    print('[Creator][Error] ${creator.infoName}: $error, $stackTrace');
   }
 
   /// Ignore a few derived creators to reduce log amount.

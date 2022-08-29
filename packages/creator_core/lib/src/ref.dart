@@ -257,8 +257,8 @@ class Ref {
   }
 
   /// Error was caught in user provided create function.
-  void _onError<T>(CreatorBase creator, Object? error) {
-    _observer?.onError(creator, error);
+  void _onError<T>(CreatorBase creator, Object? error, StackTrace? stackTrace) {
+    _observer?.onError(creator, error, stackTrace);
     _notifyWatcher(creator);
   }
 

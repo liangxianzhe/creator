@@ -74,6 +74,7 @@ abstract class ElementBase<T> {
   T state;
   T? prevState;
   Object? error; // Capture the exception happened during create.
+  StackTrace? stackTrace; // Capture the exception happened during create.
 
   /// Get error-aware state.
   T getState() => error != null ? throw (error!) : state;
@@ -126,6 +127,7 @@ class CreatorElement<T> extends ElementBase<T> {
   @override
   void recreate({CreatorBase? reason, bool autoDispose = false}) {
     error = null;
+    stackTrace = null;
     if (!created) {
       // No need to recreate if initializing, since create is called in
       // constructor already.
@@ -142,9 +144,10 @@ class CreatorElement<T> extends ElementBase<T> {
           state = newState;
           ref._onStateChange(creator, prevState, state);
         }
-      } catch (error) {
+      } catch (error, stackTrace) {
         this.error = error;
-        ref._onError(creator, error);
+        this.stackTrace = stackTrace;
+        ref._onError(creator, error, stackTrace);
       }
     }
     if (autoDispose && !creator.keepAlive) {
@@ -247,11 +250,13 @@ class EmitterElement<T> extends ElementBase<Future<T>> {
       return;
     }
     error = null;
+    stackTrace = null;
     try {
       await (creator as Emitter<T>).create(ref, emit);
-    } catch (error) {
+    } catch (error, stackTrace) {
       this.error = error;
-      ref._onError(creator, error);
+      this.stackTrace = stackTrace;
+      ref._onError(creator, error, stackTrace);
     }
     if (autoDispose && !creator.keepAlive) {
       ref.dispose(creator);

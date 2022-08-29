@@ -112,6 +112,7 @@ class _WatcherState extends State<Watcher> {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     // For now, we just dump the whole graph to DevTools.
-    properties.add(StringProperty('graph', ref.graphString()));
+    properties.add(StringProperty('graph', ref.graphString(),
+        level: DiagnosticLevel.debug));
   }
 }

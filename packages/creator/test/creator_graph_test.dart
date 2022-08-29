@@ -49,7 +49,7 @@ void main() {
       final ob = DefaultCreatorObserver();
       final creator = Creator.value(42);
       ob.onStateChange(creator, 1, 2);
-      ob.onError(creator, 'error');
+      ob.onError(creator, 'error', null);
     });
   });
 }

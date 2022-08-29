@@ -69,11 +69,11 @@ class DefaultCreatorObserver extends CreatorObserver {
   }
 
   @override
-  void onError(CreatorBase creator, Object? error) {
+  void onError(CreatorBase creator, Object? error, StackTrace? stackTrace) {
     if (ignore(creator)) {
       return;
     }
-    debugPrint('[Creator][Error] ${creator.infoName}: $error');
+    debugPrint('[Creator][Error] ${creator.infoName}: $error\n$stackTrace');
   }
 
   /// Ignore a few derived creators to reduce log amount.
