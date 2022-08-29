@@ -20,7 +20,7 @@ void main() {
   test('temperature creator change fahrenheit value', () async {
     final ref = Ref();
     expect(await ref.watch(temperatureCreator), "60 F");
-    ref.set(fahrenheitCreator, Future.value(90));
+    ref.emit(fahrenheitCreator, 90);
     await Future.delayed(const Duration()); // allow emitter to propagate
     expect(await ref.watch(temperatureCreator), "90 F");
   });

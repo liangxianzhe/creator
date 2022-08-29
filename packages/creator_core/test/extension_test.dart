@@ -79,7 +79,7 @@ void main() {
 
     final ref = Ref();
     expect(await ref.watch(double), 2);
-    ref.set(number, Future.value(2));
+    ref.emit(number, 2);
     await Future.delayed(const Duration());
     expect(await ref.watch(double), 4);
   });
@@ -93,7 +93,7 @@ void main() {
 
     final ref = Ref();
     expect(await ref.watch(double), 2);
-    ref.set(number, Future.value(2));
+    ref.emit(number, 2);
     await Future.delayed(const Duration());
     expect(await ref.watch(double), 4);
   });
@@ -109,15 +109,15 @@ void main() {
     ref.watch(odd);
     expect(ref.watch(odd), completion(1)); // Complete later when set number
 
-    ref.set(number, Future.value(1));
+    ref.emit(number, 1);
     await Future.delayed(const Duration());
     expect(await ref.watch(odd), 1);
 
-    ref.set(number, Future.value(2));
+    ref.emit(number, 2);
     await Future.delayed(const Duration());
     expect(await ref.watch(odd), 1); // Ignore even number
 
-    ref.set(number, Future.value(3));
+    ref.emit(number, 3);
     await Future.delayed(const Duration());
     expect(await ref.watch(odd), 3);
   });
@@ -132,10 +132,10 @@ void main() {
 
     final ref = Ref();
     expect(await ref.watch(sum), 1);
-    ref.set(number, Future.value(2));
+    ref.emit(number, 2);
     await Future.delayed(const Duration());
     expect(await ref.watch(sum), 3);
-    ref.set(number, Future.value(3));
+    ref.emit(number, 3);
     await Future.delayed(const Duration());
     expect(await ref.watch(sum), 6);
   });
@@ -154,10 +154,10 @@ void main() {
 
     final ref = Ref();
     expect(await ref.watch(watcher), 1);
-    ref.set(number, Future.value(10));
+    ref.emit(number, 10);
     await Future.delayed(const Duration());
     expect(await ref.watch(watcher), 20);
-    ref.set(number, Future.value(100));
+    ref.emit(number, 100);
     await Future.delayed(const Duration());
     expect(await ref.watch(watcher), 200);
     expect(result, [1, 2, 10, 20, 100, 200]);

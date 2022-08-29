@@ -199,14 +199,14 @@ void main() {
       expect(ref.graph.from(a), {c});
       expect(ref.graph.from(b), isEmpty);
 
-      ref.set(a, Future.value(-1));
+      ref.emit(a, -1);
       await Future.delayed(const Duration());
       expect(await ref.watch(c), 2);
       expect(ref.elements.keys, {a, b, c});
       expect(ref.graph.from(a), {c});
       expect(ref.graph.from(b), {c});
 
-      ref.set(a, Future.value(1));
+      ref.emit(a, 1);
       await Future.delayed(const Duration());
       expect(await ref.watch(c), 1);
       expect(ref.elements.keys, {a, c});
@@ -295,7 +295,7 @@ void main() {
       expect(await ref.watch(a), 1);
       expect(await ref.watch(b), 2);
 
-      ref.set(a, Future.value(10));
+      ref.emit(a, 10);
       await Future.delayed(const Duration());
       expect(await ref.watch(a), 10);
       expect(await ref.watch(b), 20);
@@ -326,7 +326,7 @@ void main() {
     test('recreate is not called when set', () async {
       final ref = RefForTest();
       final a = Emitter<int>((ref, emit) async => emit(await Future.error('')));
-      ref.set(a, Future.value(1));
+      ref.emit(a, 1);
       await Future.delayed(const Duration());
       expect(await ref.read(a), 1);
       expect(ref.elements, contains(a));
@@ -391,7 +391,7 @@ void main() {
     test('recreate is not called when emit', () async {
       final ref = RefForTest();
       final a = Emitter<int>((ref, emit) async => emit(await Future.error('')));
-      ref.set(a, Future.value(1));
+      ref.emit(a, 1);
       await Future.delayed(const Duration());
       expect(await ref.read(a), 1);
       expect(ref.elements, contains(a));
@@ -626,7 +626,7 @@ void main() {
 
       expect(await ref.watch(b), 1);
       expect(await ref.watch(c), 2);
-      ref.set(a, Future.value('invalid'));
+      ref.emit(a, 'invalid');
       await Future.delayed(const Duration());
       expect(() async => await ref.watch(b), throwsFormatException);
       expect(() async => await ref.watch(c), throwsFormatException);
@@ -643,7 +643,7 @@ void main() {
 
       expect(await ref.watch(b.change), Change(null, 1));
       expect(await ref.watch(c.change), Change(null, 2));
-      ref.set(a, Future.value('invalid'));
+      ref.emit(a, 'invalid');
       await Future.delayed(const Duration());
       expect(() async => await ref.watch(b.change), throwsFormatException);
       expect(() async => await ref.watch(c.change), throwsFormatException);
@@ -663,7 +663,7 @@ void main() {
 
       expect(ref.watch(b.asyncData), AsyncData.withData(1));
       expect(ref.watch(c.asyncData), AsyncData.withData(2));
-      ref.set(a, Future.value('invalid'));
+      ref.emit(a, 'invalid');
       await Future.delayed(const Duration());
       expect(() => ref.watch(b.asyncData), throwsFormatException);
       expect(() => ref.watch(c.asyncData), throwsFormatException);

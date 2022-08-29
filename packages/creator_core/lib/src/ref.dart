@@ -145,7 +145,7 @@ class Ref {
   /// Set state of the creator. Typically this is used to set the state for
   /// creator with no dependency, but the framework allows setting state for any
   /// creator. No-op if the state doesn't change.
-  void set<T>(CreatorBase<T> creator, T state) {
+  void set<T>(Creator<T> creator, T state) {
     final element = _element<T>(creator, recreate: false);
     final before = element.state;
     if (before != state) {
@@ -158,15 +158,13 @@ class Ref {
 
   /// Set state of creator using an update function. See [set]. No-op if the
   /// state doesn't change.
-  void update<T>(CreatorBase<T> creator, T Function(T) update) {
+  void update<T>(Creator<T> creator, T Function(T) update) {
     set<T>(creator, update(_element(creator).state));
   }
 
   /// Set state of the emitter. Use this only if you control all the paths the
   /// emitter could be recreated, to avoid the value emitted here override by
   /// other state propagation flows.
-  /// This method is experimental, if people like it, we will change [set] to
-  /// work with Creator instead of CreatorBase.
   void emit<T>(Emitter<T> emitter, T state) {
     final element = _element(emitter, recreate: false) as EmitterElement<T>;
     element.emit(state);
