@@ -110,7 +110,6 @@ Table of content:
 - [FAQ](#faq)
   - [Is it production ready?](#is-it-production-ready)
   - [Is it bad to define creator as global variable?](#is-it-bad-to-define-creator-as-global-variable)
-  - [How to watch a property while still accessing the whole object?](#how-to-watch-a-property-while-still-accessing-the-whole-object)
   - [How does creator's life cycle work?](#how-does-creators-life-cycle-work)
   - [What's the difference between `context.ref` vs `ref` in `Creator((ref) => ...)`?](#whats-the-difference-between-contextref-vs-ref-in-creatorref--)
   - [What's the difference between `Creator<Future<T>>` vs `Emitter<T>`?](#whats-the-difference-between-creatorfuturet-vs-emittert)
@@ -311,6 +310,18 @@ Watcher((context, ref, child) {
   final color = ref.watch(userFavoriteColor);
   return Container(color: color, child: child);
 }, child: ExpensiveAnimation());  // this child is passed into the builder above
+```
+
+You can control your widget rebuild precisely with fine grain reactive approach:
+
+```dart
+Watcher((context, ref, _) {
+  // Only rebuild when user's name changes.
+  ref.watch(userCreator.map((user) => user.name));
+  // Read other user data as needed.
+  final user = ref.read(userCreator);
+  return TextButton(onPressed() => print('clicked ${user}'), child: Text(user.name));
+});
 ```
 
 ## Listen to change
@@ -629,16 +640,6 @@ read the source code and make your own call.
 
 It's not. Creator itself doesn't hold states. States are held in Ref (in
 CreatorGraph). Defining a creator is more like defining a function or a class.
-
-## How to watch a property while still accessing the whole object?
-
-```dart
-final someCreator = Creator((ref) {
-  ref.watch(userCreator.map((user) => user.email));
-  final user = ref.read(userCreator);
-  return '${user.name}\'s email is changed';
-});
-```
 
 ## How does creator's life cycle work?
 
