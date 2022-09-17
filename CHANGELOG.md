@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Use throwWithStackTrace for better debug log.
+
 ## 0.2.0
 
 - [Breaking] Group creator name now takes arguments.

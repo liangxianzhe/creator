@@ -24,7 +24,7 @@ Commit and create PR.
 
 This is for the package owner.
 
-Update version in `pubspec.yaml` in both packages. Update `CHANGELOG.md` in both packages.
+Update version in `pubspec.yaml` in both packages. Update `CHANGELOG.md` in root folder.
 
 `melos clean` to clear the local dependency overrides.
 
