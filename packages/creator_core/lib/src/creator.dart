@@ -77,7 +77,8 @@ abstract class ElementBase<T> {
   StackTrace? stackTrace; // Capture the exception happened during create.
 
   /// Get error-aware state.
-  T getState() => error != null ? throw (error!) : state;
+  T getState() =>
+      error != null ? Error.throwWithStackTrace(error!, stackTrace!) : state;
 
   /// Whether the creator has been created at least once.
   bool created = false;
