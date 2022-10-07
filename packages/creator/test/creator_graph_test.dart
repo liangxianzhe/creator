@@ -45,11 +45,36 @@ void main() {
       expect(ob.ignore(Creator.value(42, name: 'listener')), true);
     });
 
-    test('not raising error', () {
-      final ob = DefaultCreatorObserver();
+    test('ignore creators log watcher', () {
+      final ob = DefaultCreatorObserver(logWatcher: true);
+      expect(ob.ignore(Creator.value(42, name: 'watcher')), false);
+      expect(ob.ignore(Creator.value(42, name: 'listener')), false);
+    });
+
+    test('ignore creators log derived', () {
+      final ob = DefaultCreatorObserver(logDerived: true);
+      expect(ob.ignore(Creator.value(42, name: 'foo_asyncData')), false);
+      expect(ob.ignore(Creator.value(42, name: 'foo_change')), false);
+    });
+
+    test('not raising error on state change', () {
       final creator = Creator.value(42);
-      ob.onStateChange(creator, 1, 2);
-      ob.onError(creator, 'error', null);
+      DefaultCreatorObserver().onStateChange(creator, 1, 2);
+      DefaultCreatorObserver(logStateChange: false)
+          .onStateChange(creator, 1, 2);
+      DefaultCreatorObserver(logState: false).onStateChange(creator, 1, 2);
+    });
+
+    test('not raising error on error', () {
+      final creator = Creator.value(42);
+      DefaultCreatorObserver().onError(creator, 'error', null);
+      DefaultCreatorObserver(logError: false).onError(creator, 'error', null);
+    });
+
+    test('not raising error on dispose', () {
+      final creator = Creator.value(42);
+      DefaultCreatorObserver().onDispose(creator);
+      DefaultCreatorObserver(logDispose: false).onDispose(creator);
     });
   });
 }
