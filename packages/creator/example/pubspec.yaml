@@ -32,6 +32,8 @@ dependencies:
   
   creator:
     path: ..
+  creator_core:
+    path: ../../creator_core
 
 
   # The following adds the Cupertino Icons font to your application.
