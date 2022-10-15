@@ -5,7 +5,7 @@ class Ref {
   Ref._({
     CreatorBase? owner,
     CreatorObserver? observer,
-    Map<CreatorBase, ElementBase>? elements,
+    HashMap<CreatorBase, ElementBase>? elements,
     Graph<CreatorBase>? graph,
     Map<CreatorBase, Set<CreatorBase>>? before,
     Map<CreatorBase, Set<CreatorBase>>? after,
@@ -13,7 +13,7 @@ class Ref {
     final Map<CreatorBase, void Function()>? onClean,
   })  : _owner = owner,
         _observer = observer,
-        _elements = elements ?? {},
+        _elements = elements ?? HashMap(),
         _graph = graph ??
             Graph(name: (c) => c.infoName, keepAlive: (c) => c.keepAlive),
         _before = before ?? {},
@@ -55,7 +55,7 @@ class Ref {
   final CreatorObserver? _observer;
 
   /// Elements which hold state.
-  final Map<CreatorBase, ElementBase> _elements;
+  final HashMap<CreatorBase, ElementBase> _elements;
 
   /// Dependency graph. Think this as a directional graph.  A -> [B, C] means if
   /// A changes, B and C need change too.

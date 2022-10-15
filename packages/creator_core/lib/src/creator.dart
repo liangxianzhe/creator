@@ -44,9 +44,13 @@ abstract class CreatorBase<T> {
 
   /// See [args].
   @override
-  bool operator ==(dynamic other) =>
-      other is CreatorBase<T> &&
-      (args != null ? _listEqual(args!, other.args ?? []) : super == other);
+  bool operator ==(dynamic other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    return other is CreatorBase<T> &&
+        (args != null ? _listEqual(args!, other.args ?? []) : super == other);
+  }
 
   /// See [args].
   @override
