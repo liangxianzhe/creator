@@ -1,3 +1,8 @@
+## 0.2.2
+
+- DefaultCreatorObserver now has a few configs to control what to log.
+- DefaultCreatorObserver is default to disabled in release mode for better performance.
+
 ## 0.2.1
 
 - Use throwWithStackTrace for better debug log.
