@@ -676,6 +676,3 @@ Check [FAQ for riverpod user](https://github.com/liangxianzhe/creator/blob/maste
 # That's it
 Hope you enjoyed reading this doc and will enjoy using Creator. Feedback and
 [contribution](https://github.com/liangxianzhe/creator/blob/master/doc/developer_guide.md) are welcome!
-  
-* Let us know your experience using Creator.
-* Upvote this [issue](https://github.com/dart-lang/dart-pad/issues/2288) so we can build DartPad example easier.
