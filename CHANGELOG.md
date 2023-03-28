@@ -1,7 +1,7 @@
 ## 0.3.0
 
 - Change watcher build mechanism to improve performance. 
-- Deprecate group (.arg). See #21 for detail.
+- [Breaking] Deprecate group (.arg). See #21 for detail.
 
 ## 0.2.2
 
