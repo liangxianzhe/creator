@@ -1,3 +1,8 @@
+## 0.3.0
+
+- Change watcher build mechanism to improve performance. 
+- Deprecate group (.arg). See #21 for detail.
+
 ## 0.2.2
 
 - DefaultCreatorObserver now has a few configs to control what to log.
