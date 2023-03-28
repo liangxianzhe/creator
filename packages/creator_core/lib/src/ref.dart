@@ -10,6 +10,7 @@ class Ref {
     Map<CreatorBase, Set<CreatorBase>>? before,
     Map<CreatorBase, Set<CreatorBase>>? after,
     Set<CreatorBase>? toCreate,
+    Set<CreatorBase>? keepDependency,
     final Map<CreatorBase, void Function()>? onClean,
   })  : _owner = owner,
         _observer = observer,
@@ -19,6 +20,7 @@ class Ref {
         _before = before ?? {},
         _after = after ?? {},
         _toCreate = toCreate ?? {},
+        _keepDependency = keepDependency ?? {},
         _clean = onClean ?? {};
 
   Ref({CreatorObserver? observer}) : this._(observer: observer);
@@ -34,6 +36,7 @@ class Ref {
       before: _before,
       after: _after,
       toCreate: _toCreate,
+      keepDependency: _keepDependency,
       onClean: _clean,
     );
   }
@@ -77,6 +80,8 @@ class Ref {
   /// During recreation we record new dependencies in [_after]. Then we compare
   /// them once recreation is finished.
   ///
+  /// If user calls ref.keepDependency(), then the comparison is skipped.
+  ///
   /// Recreation might take a while if it is waiting for async task. While it is
   /// waiting, its dependency might changes and trigger a second recreation job.
   /// If this happens, we will simply add the creator to [_toCreate]. Later we
@@ -88,6 +93,9 @@ class Ref {
 
   /// See [_before].
   final Set<CreatorBase> _toCreate;
+
+  /// See [_before].
+  final Set<CreatorBase> _keepDependency;
 
   /// User provided call back function, which should be called before next
   /// recreate call or after creator is disposed.
@@ -202,6 +210,14 @@ class Ref {
     _clean[_owner!] = onClean;
   }
 
+  /// Tell the framework that the current recreation didn't change the dependency, so that
+  /// dependency check is skipped for once. This is rarely needed, but could be useful if
+  /// the recreation makes conditional side effects outside of the graph.
+  void keepDependency() {
+    assert(_owner != null, 'keepDependency is called outside of create method');
+    _keepDependency.add(_owner!);
+  }
+
   /// Delete creators which are already deleted from [_graph].
   void _delete(List<CreatorBase> creators) {
     for (final creator in creators) {
@@ -231,9 +247,11 @@ class Ref {
   /// Creator will notify Ref that they finished creation. See [_before].
   void _onCreateFinish<T>() {
     // Delete dependencies which are not needed any more.
-    for (final dep in _before[_owner!] ?? {}) {
-      if (!(_after[_owner!]?.contains(dep) ?? false)) {
-        _delete(_graph.deleteEdge(dep, _owner!));
+    if (!_keepDependency.contains(_owner!)) {
+      for (final dep in _before[_owner!] ?? {}) {
+        if (!(_after[_owner!]?.contains(dep) ?? false)) {
+          _delete(_graph.deleteEdge(dep, _owner!));
+        }
       }
     }
     // Start queued work if any.

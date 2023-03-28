@@ -35,7 +35,7 @@ class Watcher extends StatefulWidget {
 }
 
 class _WatcherState extends State<Watcher> {
-  Creator<Widget>? builder;
+  Creator<void>? builder;
   Creator<void>? listener;
   late Ref ref;
 
@@ -47,18 +47,20 @@ class _WatcherState extends State<Watcher> {
   /// calling builder function twice.
   bool dependencyChanged = false;
 
+  bool built = false;
+  late Widget last;
+
   void _setup() {
     if (widget.builder != null) {
       builder = Creator((ref) {
         if (!building) {
-          // Dependency state changes. Set dependencyChanged so that next time
-          // build is called, we skip recreating the creator. This way the
-          // builder function is only called once.
-          setState(() {
-            dependencyChanged = true;
-          });
+          setState(() {});
+          // Tell the framework that this rebuild didn't change dependency, even though we didn't
+          // call any watch function.
+          ref.keepDependency();
+        } else {
+          last = widget.builder!(context, ref, widget.child);
         }
-        return widget.builder!(context, ref, widget.child);
       }, name: widget.builderName ?? 'watcher');
       // Not watch(builder) here, use recreate(builder) later.
     }
@@ -98,14 +100,9 @@ class _WatcherState extends State<Watcher> {
       return widget.child!;
     }
     building = true;
-    // Recreate will add builder to the graph. Recreate its state if the build
-    // call is triggered by Flutter rather than dependency change.
-    if (!dependencyChanged) {
-      ref.recreate(builder!);
-    }
+    ref.recreate(builder!); // Recreate will add builder to the graph.
     building = false;
-    dependencyChanged = false;
-    return ref.read(builder!);
+    return last;
   }
 
   @override
