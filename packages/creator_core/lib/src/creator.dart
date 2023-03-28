@@ -116,10 +116,6 @@ class Creator<T> extends CreatorBase<T> {
 
   final T Function(Ref) create;
 
-  static const arg1 = _CreatorWithArg1();
-  static const arg2 = _CreatorWithArg2();
-  static const arg3 = _CreatorWithArg3();
-
   @override
   CreatorElement<T> _createElement(Ref ref) => CreatorElement<T>(ref, this);
 }
@@ -202,10 +198,6 @@ class Emitter<T> extends CreatorBase<Future<T>> {
   /// then call emit to push data to the graph. emit can be called multiple
   /// times.
   final FutureOr<void> Function(Ref ref, void Function(T) emit) create;
-
-  static const arg1 = _EmitterWithArg1();
-  static const arg2 = _EmitterWithArg2();
-  static const arg3 = _EmitterWithArg3();
 
   @override
   EmitterElement<T> _createElement(Ref ref) =>

@@ -6,5 +6,4 @@ import 'graph.dart';
 import 'observer.dart';
 
 part 'creator.dart';
-part 'group.dart';
 part 'ref.dart';

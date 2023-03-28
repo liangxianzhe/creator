@@ -91,9 +91,9 @@ Table of content:
   - [Listen to change](#listen-to-change)
   - [Name](#name)
   - [Keep alive](#keep-alive)
-  - [Creator group](#creator-group)
   - [Extension method](#extension-method)
   - [Creator equality](#creator-equality)
+  - [Creator group](#creator-group)
   - [Service locator](#service-locator)
   - [Error handling](#error-handling)
   - [Testing](#testing)
@@ -363,27 +363,6 @@ final userCreator = Emitter.stream((ref) {
 }, keepAlive: true);
 ```
 
-## Creator group
-
-Creator group can generate creators with external parameter. For example,
-in Instagram app, there might be multiple profile pages on navigation stack,
-thus we need multiple instance of `profileCreator`.
-
-```dart
-// Instagram has four tabs: instagram, reels, video, tagged
-final tabCreator = Creator.arg1<Tab, String>((ref, userId) => 'instagram');
-final profileCreator = Emitter.arg1<Profile, String>((ref, userId, emit) async {
-  final tab = ref.watch(tabCreator(userId));
-  emit(await fetchProfileData(userId, tab));  // Call backend
-});
-
-// Now switching tab in user A's profile page will not affect user B.
-... ref.watch(profileCreator('userA'));
-... ref.set(tabCreator('userA'), 'reels');
-```
-
-Creators comes with factory methods `arg1` `arg2` `arg3` which take in 1-3 arguments.
-
 ## Extension method
 
 Our favorite part of the library is that you can use methods like `map`,
@@ -474,9 +453,29 @@ final text = Creator((ref) {
 ```
 
 Internally, args powers these features:
-* Creator group. `profileCreator('userA')` is a creator with args `[profileCreator, 'userA']`.
 * Async data. `userCreator.asyncData` is a creator with args `[userCreator, 'asyncData']`.
 * Change. `number.change` is a creator with args `[number, 'change']`.
+
+## Creator group
+
+Creator group can generate creators with external parameter. It is nothing special, but leveraging
+the `args` parameter in previous section.
+
+For example, in Instagram app, there might be multiple profile pages on navigation stack, thus we
+need multiple instance of `profileCreator`.
+
+```dart
+// Instagram has four tabs: instagram, reels, video, tagged
+Creator<String> tabCreator(String userId) => Creator.value('instagram', args: ["tab", userId]);
+Emitter<Profile> profileCreator(String userId)
+    => tabCreator(userId).asyncMap(fetchProfileData, args: ["profle", userId]);
+
+// Now switching tab in user A's profile page will not affect user B.
+... ref.watch(profileCreator('userA'));
+... ref.set(tabCreator('userA'), 'reels');
+```
+
+Creators comes with factory methods `arg1` `arg2` `arg3` which take in 1-3 arguments.
 
 ## Service locator
 
@@ -509,7 +508,7 @@ makes the most sense. Use the weather app above as an example:
 // Here we don't handle error, meaning it returns Future.error if network error
 // occurs. Alternately we can catch network error and return some default value,
 // add retry logic, convert network error to our own error class, etc.
-final fahrenheitCreator = cityCreator.mapAsync(getFahrenheit);
+final fahrenheitCreator = cityCreator.asyncMap(getFahrenheit);
 
 // Here we choose to handle the error in widget.
 Widget build(BuildContext context) {
