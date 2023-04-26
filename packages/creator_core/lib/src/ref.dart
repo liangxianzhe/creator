@@ -254,6 +254,8 @@ class Ref {
         }
       }
     }
+    // Clear keep dependency bit.
+    _keepDependency.remove(_owner!);
     // Start queued work if any.
     _before.remove(_owner!);
     _after.remove(_owner!);
