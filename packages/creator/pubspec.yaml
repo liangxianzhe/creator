@@ -1,18 +1,18 @@
 name: creator
 description: A state management library that enables concise, fluid, readable and testable business logic code. 
-version: 0.3.0
-repository: https://github.com/terryl1900/creator/tree/master/packages/creator
-issue_tracker: https://github.com/terryl1900/creator/issues
-homepage: https://github.com/terryl1900/creator
+version: 0.3.1
+repository: https://github.com/liangxianzhe/creator/tree/master/packages/creator
+issue_tracker: https://github.com/liangxianzhe/creator/issues
+homepage: https://github.com/liangxianzhe/creator
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  creator_core: ^0.3.0
+  creator_core: ^0.3.1
 
 dev_dependencies:
   lints: ^2.0.0

@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Fix a build performance issue. 
+
 ## 0.3.0
 
 - Change watcher build mechanism to improve performance. 
