@@ -99,11 +99,6 @@ Table of content:
   - [Testing](#testing)
 - [Example](#example)
   - [Simple example](#simple-example)
-    - [Counter](#counter)
-    - [Decremental counter](#decremental-counter)
-    - [Weather](#weather)
-    - [News](#news)
-    - [Graph](#graph)
   - [Starter template](#starter-template)
 - [Best practice](#best-practice)
 - [Read source code](#read-source-code)
@@ -553,37 +548,13 @@ test('temperature creator change fahrenheit value', () async {
 
 Source code [here](https://github.com/liangxianzhe/creator/blob/master/packages/creator/example/lib).
 
-### Counter
-
-[DartPad](https://dartpad.dev/?id=911a1919b2b7125cc1f8c69e3c07caf9)
-
-A counter app shows basic Creator/Watcher usage.
-
-### Decremental counter
-
-[DartPad](https://dartpad.dev/?id=1a4c338fdf8ef7c4af8f80ddff88f4ec)
-
-A counter app shows how to hide state and expose state mutate APIs.
-
-### Weather
-
-[DartPad](https://dartpad.dev/?id=344ee052cab2700bd084a78ac6362897)
-
-Simple weather app shows splitting backend/logic/ui code and writing logic
-with Creator and Emitter.
-
-### News
-
-[DartPad](https://dartpad.dev/?id=a6d82a6bb955fa4f42ff50b6c6d90d34)
-
-Simple news app with infinite list of news. It shows combining creators
-for loading indicator and fetching data with pagination.
-
-### Graph
-
-[DartPad](https://dartpad.dev/?id=77a60e33349a20c6623d163146378c5d)
-
-Simple app shows how the creator library builds the internal graph dynamically.
+| DartPad link  | Description   | 
+| --------------| ------------- | 
+[Counter](https://dartpad.dev/?id=911a1919b2b7125cc1f8c69e3c07caf9) | A counter app shows basic Creator/Watcher usage.
+[Decremental counter](https://dartpad.dev/?id=1a4c338fdf8ef7c4af8f80ddff88f4ec) | A counter app shows how to hide state and expose state mutate APIs.
+[Weather](https://dartpad.dev/?id=344ee052cab2700bd084a78ac6362897) | Simple weather app shows splitting backend/logic/ui code and writing logic with Creator and Emitter.
+[News](https://dartpad.dev/?id=a6d82a6bb955fa4f42ff50b6c6d90d34) | Simple news app with infinite list of news. It shows combining creators for loading indicator and fetching data with pagination.
+[Graph](https://dartpad.dev/?id=77a60e33349a20c6623d163146378c5d) | Simple app shows how the creator library builds the internal graph dynamically.
 
 ## Starter template 
 
