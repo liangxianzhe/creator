@@ -470,8 +470,6 @@ Emitter<Profile> profileCreator(String userId)
 ... ref.set(tabCreator('userA'), 'reels');
 ```
 
-Creators comes with factory methods `arg1` `arg2` `arg3` which take in 1-3 arguments.
-
 ## Service locator
 
 State management libraries are commonly used as service locators:
