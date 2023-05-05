@@ -189,15 +189,18 @@ class Emitter<T> extends CreatorBase<Future<T>> {
   Emitter.stream(FutureOr<Stream<T>> Function(Ref) stream,
       {String? name, bool keepAlive = false, List<Object?>? args})
       : this((ref, emit) async {
-          final cancel =
-              (await stream(ref)).listen((value) => emit(value)).cancel;
-          ref.onClean(cancel);
+          final sub = (await stream(ref)).listen((value) => emit(value),
+              onError: (error, stackTrace) {
+            emit(null, error, stackTrace);
+          });
+          ref.onClean(sub.cancel);
         }, name: name, keepAlive: keepAlive, args: args);
 
   /// User provided create function. It can use ref to get data from the graph
   /// then call emit to push data to the graph. emit can be called multiple
-  /// times.
-  final FutureOr<void> Function(Ref ref, void Function(T) emit) create;
+  /// times. If error is set, value is ignored.
+  final FutureOr<void> Function(Ref ref,
+      void Function(T?, [Object? error, StackTrace? stackTrace]) emit) create;
 
   @override
   EmitterElement<T> _createElement(Ref ref) =>
@@ -222,22 +225,32 @@ class EmitterElement<T> extends ElementBase<Future<T>> {
   T? prevValue;
 
   /// The emit function which could be called in user provided create function.
-  void emit(T newValue) {
-    if (created && value == newValue) {
-      return; // Nothing changes
-    }
-    if (!created) {
-      // emit is called the first time, let's wake up awaiting watchers.
-      completer.complete(newValue);
+  void emit(T? newValue, [Object? error, StackTrace? stackTrace]) {
+    if (error != null) {
+      if (!created) {
+        // Error happens before any emit calls, let's wake up awaiting watchers.
+        completer.completeError(error, stackTrace);
+      }
+      ref._onError(creator, error, stackTrace);
     } else {
-      prevState = state;
-      state = Future<T>.value(newValue);
+      if (created && value == newValue) {
+        return; // Nothing changes
+      }
+      if (!created) {
+        // emit is called the first time, let's wake up awaiting watchers.
+        completer.complete(newValue);
+      } else {
+        prevState = state;
+        state = Future<T>.value(newValue);
+      }
+      prevValue = value;
+      value = newValue;
+      ref._onStateChange(creator, prevValue, value);
     }
-    prevValue = value;
-    value = newValue;
-    ref._onStateChange(creator, prevValue, value);
+    this.error = error;
+    this.stackTrace = stackTrace;
 
-    // Emitter is considered created as long as emit is called once.
+    // Emitter is considered created as long as emit is called once, even for errors.
     created = true;
   }
 

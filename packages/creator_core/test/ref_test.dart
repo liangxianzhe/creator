@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:creator_core/src/async_data.dart';
 import 'package:creator_core/src/core.dart';
 import 'package:test/test.dart';
@@ -667,6 +669,18 @@ void main() {
       await Future.delayed(const Duration());
       expect(() => ref.watch(b.asyncData), throwsFormatException);
       expect(() => ref.watch(c.asyncData), throwsFormatException);
+    });
+
+    test('error in emitter stream', () async {
+      final ref = RefForTest();
+      final controller = StreamController<int>();
+      final emitter = Emitter.stream((ref) => controller.stream);
+
+      controller.addError(FormatException());
+      expect(() async => await ref.watch(emitter), throwsFormatException);
+      controller.add(1);
+      await Future.delayed(const Duration());
+      expect(await ref.watch(emitter), 1);
     });
   });
 
