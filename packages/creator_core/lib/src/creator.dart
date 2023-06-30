@@ -114,7 +114,7 @@ class Creator<T> extends CreatorBase<T> {
       {String? name, bool keepAlive = false, List<Object?>? args})
       : this((ref) => t, name: name, keepAlive: keepAlive, args: args);
 
-  final T Function(Ref) create;
+  final T Function(Ref ref) create;
 
   @override
   CreatorElement<T> _createElement(Ref ref) => CreatorElement<T>(ref, this);
@@ -200,7 +200,8 @@ class Emitter<T> extends CreatorBase<Future<T>> {
   /// then call emit to push data to the graph. emit can be called multiple
   /// times. If error is set, value is ignored.
   final FutureOr<void> Function(Ref ref,
-      void Function(T?, [Object? error, StackTrace? stackTrace]) emit) create;
+          void Function(T? value, [Object? error, StackTrace? stackTrace]) emit)
+      create;
 
   @override
   EmitterElement<T> _createElement(Ref ref) =>
