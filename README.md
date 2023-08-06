@@ -293,11 +293,11 @@ creator state changes. It can be replaced with your own log collection observer.
 
 ## Watcher
 
-Watcher is a simple StatefulWidget which holds a `Creator<Widget>` internally
+Watcher is a simple StatefulWidget which holds a `Creator<void>` internally
 and calls `setState` when its dependency changes.
 
 It takes builder function `Widget Function(BuildContext context, Ref ref, Widget
-child)`. You can use `ref` to watch creators to populate the widget. `child` can
+child)`. You can use `ref` to watch other creators. `child` can
 be used optionally if the subtree should not rebuild when dependency changes:
 
 ```dart
@@ -315,7 +315,7 @@ Watcher((context, ref, _) {
   ref.watch(userCreator.map((user) => user.name));
   // Read other user data as needed.
   final user = ref.read(userCreator);
-  return TextButton(onPressed() => print('clicked ${user}'), child: Text(user.name));
+  return TextButton(onPressed() => print('clicked ${user.id}'), child: Text(user.name));
 });
 ```
 
