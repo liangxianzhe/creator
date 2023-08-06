@@ -186,7 +186,7 @@ class Emitter<T> extends CreatorBase<Future<T>> {
   ///   return FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
   /// });
   /// ```
-  Emitter.stream(FutureOr<Stream<T>> Function(Ref) stream,
+  Emitter.stream(FutureOr<Stream<T>> Function(Ref ref) stream,
       {String? name, bool keepAlive = false, List<Object?>? args})
       : this((ref, emit) async {
           final sub = (await stream(ref)).listen((value) => emit(value),
