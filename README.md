@@ -104,7 +104,6 @@ Table of content:
 - [Read source code](#read-source-code)
 - [FAQ](#faq)
   - [Is it production ready?](#is-it-production-ready)
-  - [Is it bad to define creator as global variable?](#is-it-bad-to-define-creator-as-global-variable)
   - [How does creator's life cycle work?](#how-does-creators-life-cycle-work)
   - [What's the difference between `context.ref` vs `ref` in `Creator((ref) => ...)`?](#whats-the-difference-between-contextref-vs-ref-in-creatorref--)
   - [What's the difference between `Creator<Future<T>>` vs `Emitter<T>`?](#whats-the-difference-between-creatorfuturet-vs-emittert)
@@ -568,9 +567,7 @@ also depend on the project and personal preference. Here we just list a few
 things we follow:
 
 * Split code into repo files (backend service call), logic files (creator), and UI files (widget).
-* Define creator in global variables.
 * Keep creator small for testability. Put derived state in derived creators (using `map`, `where`, etc).
-
 
 # Read source code
 
@@ -603,11 +600,6 @@ Well, we have been using it in production for our own app
 ([Chooly](https://chooly.app)). However, since it is new to the
 community, the API might change as we take feedback. So the suggestion for now:
 read the source code and make your own call.
-
-## Is it bad to define creator as global variable?
-
-It's not. Creator itself doesn't hold states. States are held in Ref (in
-CreatorGraph). Defining a creator is more like defining a function or a class.
 
 ## How does creator's life cycle work?
 
