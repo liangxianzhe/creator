@@ -13,7 +13,9 @@ extension CreatorExtension<T> on Creator<T> {
   Creator<F> map<F>(F Function(T) map,
       {String? name, bool keepAlive = false, List<Object?>? args}) {
     return Creator((ref) => map(ref.watch(this)),
-        name: name ?? '${infoName}_map', keepAlive: keepAlive, args: args);
+        name: name ?? argsName(args) ?? '${infoName}_map',
+        keepAlive: keepAlive,
+        args: args);
   }
 
   Emitter<F> asyncMap<F>(Future<F> Function(T) map,
@@ -29,7 +31,10 @@ extension CreatorExtension<T> on Creator<T> {
       if (test(value)) {
         emit(value);
       }
-    }, name: name ?? '${infoName}_where', keepAlive: keepAlive, args: args);
+    },
+        name: name ?? argsName(args) ?? '${infoName}_where',
+        keepAlive: keepAlive,
+        args: args);
   }
 
   /// Set args to some unique value if creator is used on the fly, or null if
@@ -41,7 +46,10 @@ extension CreatorExtension<T> on Creator<T> {
       final previous = ref.readSelf();
       final element = ref.watch(this);
       return previous == null ? element : combine(previous, element);
-    }, name: name ?? '${infoName}_reduce', keepAlive: keepAlive, args: args);
+    },
+        name: name ?? argsName(args) ?? '${infoName}_reduce',
+        keepAlive: keepAlive,
+        args: args);
   }
 }
 
@@ -51,7 +59,7 @@ extension EmitterExtension<T> on Emitter<T> {
       {String? name, bool keepAlive = false, List<Object?>? args}) {
     return Emitter<F>(
         (ref, emit) => ref.watch(this).then((value) => emit(map(value))),
-        name: name ?? '${infoName}_map',
+        name: name ?? argsName(args) ?? '${infoName}_map',
         keepAlive: keepAlive,
         args: args);
   }
@@ -61,7 +69,7 @@ extension EmitterExtension<T> on Emitter<T> {
     return Emitter<F>(
         (ref, emit) =>
             ref.watch(this).then((value) => map(value).then((v) => emit(v))),
-        name: name ?? '${infoName}_map',
+        name: name ?? argsName(args) ?? '${infoName}_map',
         keepAlive: keepAlive,
         args: args);
   }
@@ -74,7 +82,10 @@ extension EmitterExtension<T> on Emitter<T> {
           emit(value as F);
         }
       });
-    }, name: name ?? '${infoName}_where', keepAlive: keepAlive, args: args);
+    },
+        name: name ?? argsName(args) ?? '${infoName}_where',
+        keepAlive: keepAlive,
+        args: args);
   }
 
   /// Set args to some unique value if creator is used on the fly, or null if
@@ -86,7 +97,10 @@ extension EmitterExtension<T> on Emitter<T> {
       final previous = ref.readSelf();
       final element = await ref.watch(this);
       emit(previous == null ? element : combine(previous, element));
-    }, name: name ?? '${infoName}_reduce', keepAlive: keepAlive, args: args);
+    },
+        name: name ?? argsName(args) ?? '${infoName}_reduce',
+        keepAlive: keepAlive,
+        args: args);
   }
 
   Emitter<F> expand<F>(Iterable<F> Function(T) convert,
@@ -97,6 +111,9 @@ extension EmitterExtension<T> on Emitter<T> {
           emit(v);
         }
       });
-    }, name: name ?? '${infoName}_expand', keepAlive: keepAlive, args: args);
+    },
+        name: name ?? argsName(args) ?? '${infoName}_expand',
+        keepAlive: keepAlive,
+        args: args);
   }
 }

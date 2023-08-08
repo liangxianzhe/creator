@@ -1,5 +1,8 @@
 part of 'core.dart';
 
+/// Format args into a string.
+String? argsName(List<Object?>? args) => args?.join('-');
+
 /// Base class of creators. Creators describe the graph dependencies.
 /// Also see [ElementBase]. Note that T should be immutable data.
 abstract class CreatorBase<T> {
@@ -7,8 +10,8 @@ abstract class CreatorBase<T> {
 
   /// Name for logging purpose.
   final String? name;
-  String get infoName => name ?? _argsName ?? _shortHash(this);
-  String get debugName => '${name ?? _argsName ?? ''}(${_shortHash(this)})';
+  String get infoName => name ?? argsName(args) ?? _shortHash(this);
+  String get debugName => '${name ?? argsName(args) ?? ''}(${_shortHash(this)})';
 
   /// Whether to keep the creator alive even if it loses all its watchers.
   final bool keepAlive;
@@ -41,7 +44,6 @@ abstract class CreatorBase<T> {
   /// * Change.
   ///   number.change is a creator with args [number, 'change'].
   final List<Object?>? args;
-  String? get _argsName => args != null ? args!.join('-') : null;
 
   /// See [args].
   @override
