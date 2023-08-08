@@ -11,7 +11,8 @@ abstract class CreatorBase<T> {
   /// Name for logging purpose.
   final String? name;
   String get infoName => name ?? argsName(args) ?? _shortHash(this);
-  String get debugName => '${name ?? argsName(args) ?? ''}(${_shortHash(this)})';
+  String get debugName =>
+      '${name ?? argsName(args) ?? ''}(${_shortHash(this)})';
 
   /// Whether to keep the creator alive even if it loses all its watchers.
   final bool keepAlive;
