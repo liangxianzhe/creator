@@ -324,6 +324,13 @@ Watching a creator will get its latest state. What if you also want previous
 state? Simply call `watch(someCreator.change)` to get a `Change<T>`, which is
 an object with two properties `T? before` and `T after`.
 
+```dart
+Creator((ref) {
+  final change = ref.watch(number.change);
+  return 'Number changed from ${change.before} to ${change.after}';
+});
+```
+
 For your convenience, `Watcher` can also take a listener. It can be used to
 achieve side effects or run background tasks:
 
