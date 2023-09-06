@@ -103,8 +103,6 @@ Table of content:
 - [Best practice](#best-practice)
 - [Read source code](#read-source-code)
 - [FAQ](#faq)
-  - [Is it production ready?](#is-it-production-ready)
-  - [How does creator's life cycle work?](#how-does-creators-life-cycle-work)
   - [What's the difference between `context.ref` vs `ref` in `Creator((ref) => ...)`?](#whats-the-difference-between-contextref-vs-ref-in-creatorref--)
   - [What's the difference between `Creator<Future<T>>` vs `Emitter<T>`?](#whats-the-difference-between-creatorfuturet-vs-emittert)
   - [What do I need to know if I'm a riverpod user?](#what-do-i-need-to-know-if-im-a-riverpod-user)
@@ -364,6 +362,12 @@ final userCreator = Emitter.stream((ref) {
 }, keepAlive: true);
 ```
 
+To summarize the life cycle of a creator:
+* It is added to the graph when firstly being watched or set.
+* It can be removed from the graph manually by `Ref.dispose`.
+* If it has watchers, it is automatically removed from the graph when losing all its
+watchers, unless keepAlive property is set.
+
 ## Extension method
 
 Our favorite part of the library is that you can use methods like `map`,
@@ -600,20 +604,6 @@ Read creator library in this order:
 * [watcher.dart](https://github.com/liangxianzhe/creator/blob/master/packages/creator/lib/src/watcher.dart): A stateful widget which holds a `Creator<Widget>` internally.
 
 # FAQ
-
-## Is it production ready?
-
-Well, we have been using it in production for our own app
-([Chooly](https://chooly.app)). However, since it is new to the
-community, the API might change as we take feedback. So the suggestion for now:
-read the source code and make your own call.
-
-## How does creator's life cycle work?
-
-* It is added to the graph when firstly being watched or set.
-* It can be removed from the graph manually by `Ref.dispose`.
-* If it has watchers, it is automatically removed from the graph when losing all its
-watchers, unless keepAlive property is set.
 
 ## What's the difference between `context.ref` vs `ref` in `Creator((ref) => ...)`?
 
