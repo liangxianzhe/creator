@@ -1,6 +1,6 @@
 name: creator_core
 description: A state management library that enables concise, fluid, readable and testable business logic code. 
-version: 0.3.2
+version: 0.3.3
 repository: https://github.com/liangxianzhe/creator/tree/master/packages/creator_core
 issue_tracker: https://github.com/liangxianzhe/creator/issues
 homepage: https://github.com/liangxianzhe/creator

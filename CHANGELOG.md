@@ -1,3 +1,7 @@
+## 0.3.3
+
+- Improve LSP hint. 
+
 ## 0.3.2
 
 - Handle Emitter.stream error better. 
